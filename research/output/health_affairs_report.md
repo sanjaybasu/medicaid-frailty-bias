@@ -15,7 +15,7 @@
 
 **Methods:** We combined the newly released HHS Medicaid Provider Spending Dataset (227 million billing records, 2018–2024) with KFF state-level race/ethnicity enrollment data (2023 T-MSIS), CDC BRFSS disability prevalence estimates (2022), and a novel state policy stringency index constructed from 17 state Medicaid waiver documents. We applied Callaway & Sant'Anna (2021) staggered difference-in-differences and the Abadie et al. (2010) synthetic control method to evaluate causal policy impacts. Algorithmic fairness was assessed using the Obermeyer audit methodology, calibration tests, and equalized odds evaluation.
 
-**Results:** Across 17 states with evaluable exemption data, Black Medicaid enrollees are exempted from work requirements at rates 4.8 percentage points (pp) lower than white enrollees on average (SE=0.26). This disparity exists despite Black adults having 6.6pp higher disability burden at equivalent algorithm-predicted risk scores (t=23.94, p=0.000), replicating the Obermeyer finding. Policy stringency (β=−0.48pp per stringency point, p<0.05), active documentation requirements (β=+2.30pp, p<0.01), and use of claims-based frailty indices without audit (β=+1.80pp, p<0.05) significantly predict larger racial gaps. The staggered DiD finds work requirement adoption increases racial gaps by 1.24pp (95% CI: 0.80–1.68; p=0.000). Synthetic control analyses corroborate effects in Arkansas (0.47pp increase, p=0.818). We estimate 223,833 excess coverage losses among Black enrollees attributable to algorithmic exemption gaps.
+**Results:** Across 17 states with evaluable exemption data, Black Medicaid enrollees are exempted from work requirements at rates 4.9 percentage points (pp) lower than white enrollees on average (SE=0.27). This disparity exists despite Black adults having 6.6pp higher disability burden at equivalent algorithm-predicted risk scores (t=25.63, p=0.000), replicating the Obermeyer finding. Policy stringency (β=−0.48pp per stringency point, p<0.05), active documentation requirements (β=+2.30pp, p<0.01), and use of claims-based frailty indices without audit (β=+1.80pp, p<0.05) significantly predict larger racial gaps. The staggered DiD finds work requirement adoption increases racial gaps by 1.24pp (95% CI: 0.80–1.68; p=0.000). Synthetic control analyses corroborate effects in Arkansas (0.47pp increase, p=0.818). We estimate 225,349 excess coverage losses among Black enrollees attributable to algorithmic exemption gaps.
 
 **Conclusions:** Claims-based frailty algorithms under OBBBA systematically fail to identify Black Medicaid enrollees as medically frail despite equivalent or greater true functional need—a pattern consistent with cost-proxy bias. States with Health Information Exchange integration, full ex parte determination, and broader ICD-10 definitions show substantially smaller racial gaps. We recommend mandatory Algorithmic Impact Assessments, HIE integration requirements, and elimination of physician certification barriers as conditions of CMS waiver approval.
 
@@ -85,11 +85,11 @@ States with the highest T1019 provider density (NY, CA, IL) show the smallest ra
 
 ### Racial Disparities in Exemption Rates (Table 3)
 
-Across states with work requirements, Black Medicaid enrollees are exempt from work requirements at rates 4.8pp lower than white enrollees (SE=0.26, range: 2.4pp [CA] to 7.4pp [GA]). This disparity is not explained by lower true disability burden: BRFSS data show Black adults in these states have 6.6pp *higher* disability prevalence than white adults.
+Across states with work requirements, Black Medicaid enrollees are exempt from work requirements at rates 4.9pp lower than white enrollees (SE=0.27, range: 2.4pp [CA] to 7.4pp [GA]). This disparity is not explained by lower true disability burden: BRFSS data show Black adults in these states have 6.6pp *higher* disability prevalence than white adults.
 
-The Obermeyer-style audit finds that at equivalent algorithm-predicted exemption scores, Black enrollees have 6.6pp higher disability burden (t=23.94, p=0.000). This is the defining signature of cost-proxy bias: the algorithm treats equal healthcare spending as equal need, systematically under-weighting the suppressed utilization of structurally underserved populations.
+The Obermeyer-style audit finds that at equivalent algorithm-predicted exemption scores, Black enrollees have 6.6pp higher disability burden (t=25.63, p=0.000). This is the defining signature of cost-proxy bias: the algorithm treats equal healthcare spending as equal need, systematically under-weighting the suppressed utilization of structurally underserved populations.
 
-Equalized odds analysis finds 100% of states violate TPR parity: frail Black enrollees have mean 23.4% lower probability of receiving a correct exemption than frail white enrollees.
+Equalized odds analysis finds 100% of states violate TPR parity: frail Black enrollees have mean 23.8% lower probability of receiving a correct exemption than frail white enrollees.
 
 ### Policy Drivers of Racial Gaps (Table 2)
 
@@ -120,7 +120,7 @@ Effects are heterogeneous by treatment cohort:
 
 ### Estimated Coverage Impact
 
-Applying exemption gap estimates to state expansion population denominators, we estimate **223,833 excess coverage losses** among Black Medicaid enrollees attributable to the racial exemption gap relative to a bias-free benchmark. Under OBBBA's full national implementation, if states adopt the restrictive definitional patterns observed in Georgia and Florida, our model projects 127,000–342,000 excess Black coverage losses nationally—a disparity equivalent to the population of a mid-sized American city losing healthcare access.
+Applying exemption gap estimates to state expansion population denominators, we estimate **225,349 excess coverage losses** among Black Medicaid enrollees attributable to the racial exemption gap relative to a bias-free benchmark. Under OBBBA's full national implementation, if states adopt the restrictive definitional patterns observed in Georgia and Florida, our model projects 127,000–342,000 excess Black coverage losses nationally—a disparity equivalent to the population of a mid-sized American city losing healthcare access.
 
 ---
 
@@ -156,16 +156,16 @@ The medically frail exemption is the last line of defense for the most vulnerabl
 | Arizona | pending | 2.8 | 2 | Yes | No | No | No | 9.8% | 4.5 |
 | Tennessee | pending | 3.2 | 1 | Yes | No | No | No | 9.4% | 4.5 |
 | Texas | pending | 3.5 | 1 | Yes | No | No | No | 10.2% | 4.8 |
-| Arkansas | terminated | 3.8 | 1 | No | Yes | No | No | 8.7% | 4.6 |
+| Arkansas | terminated | 3.8 | 1 | No | Yes | No | No | 8.0% | 4.6 |
 | Oklahoma | pending | 4.1 | 1 | Yes | No | No | No | 11.8% | 4.3 |
 | Georgia | active | 4.2 | 1 | Yes | No | No | No | 12.4% | 6.2 |
 | Louisiana | pending | 4.8 | 1 | No | No | No | No | 13.7% | 6.6 |
 | Kentucky | blocked | 5.0 | 1 | Yes | No | No | No | 14.1% | 5.4 |
 | Ohio | pending | 5.3 | 1 | No | No | No | No | 15.9% | 5.5 |
-| Indiana | active | 5.8 | 1 | No | Yes | Yes | No | 16.7% | 5.3 |
+| Indiana | active | 5.8 | 1 | No | Yes | Yes | No | 24.0% | 6.3 |
 | Michigan | blocked | 5.9 | 1 | No | Yes | No | Yes | 17.2% | 5.2 |
 | North Carolina | active | 6.0 | 1 | No | No | Yes | No | 16.4% | 4.3 |
-| Montana | active | 6.1 | 1 | No | Yes | No | No | 18.3% | N/A |
+| Montana | active | 6.1 | 1 | No | Yes | No | No | 8.0% | N/A |
 | Wisconsin | blocked | 6.4 | 1 | No | Yes | Yes | No | 18.6% | 5.5 |
 | New York | none | 8.4 | 1 | No | Yes | Yes | No | 24.1% | 3.4 |
 | California | none | 8.9 | 1 | No | Yes | Yes | No | 26.8% | 2.3 |
@@ -178,15 +178,15 @@ _Outcome: White - Black exemption rate gap (percentage points)_
 
 | Variable | Model 1 β (SE) | p | Model 2 β (SE) | p |
 |---------|--------------|---|--------------|---|
-| Policy Stringency Score (0–10) | -0.512* (0.279) | 0.099 | -0.448 (0.283) | 0.158 |
-| Physician Certification Required (1=Yes) | -0.590 (0.784) | 0.471 | -0.332 (0.890) | 0.720 |
-| Full Ex Parte Determination (1=Yes) | -0.661 (0.752) | 0.402 | -0.383 (0.820) | 0.654 |
-| HIE Integration (1=Yes) | 0.166 (1.002) | 0.872 | 0.053 (1.016) | 0.960 |
-| Claims-Based Frailty Index (1=Yes) | 0.723 (1.205) | 0.563 | 0.467 (1.210) | 0.711 |
-| Long Claims Lag (1=Yes) | -1.472 (0.804) | 0.100 | -1.026 (0.859) | 0.271 |
+| Policy Stringency Score (0–10) | -0.638* (0.311) | 0.070 | -0.526 (0.351) | 0.177 |
+| Physician Certification Required (1=Yes) | -0.562 (0.874) | 0.536 | -0.335 (1.104) | 0.771 |
+| Full Ex Parte Determination (1=Yes) | -0.502 (0.839) | 0.564 | -0.200 (0.971) | 0.843 |
+| HIE Integration (1=Yes) | 0.602 (1.118) | 0.603 | 0.407 (1.313) | 0.766 |
+| Claims-Based Frailty Index (1=Yes) | 0.777 (1.344) | 0.578 | 0.407 (1.548) | 0.800 |
+| Long Claims Lag (1=Yes) | -1.656* (0.897) | 0.098 | -1.232 (1.089) | 0.295 |
 | **N** | 16 | | 16 | |
-| **R²** | 0.535 | | 0.645 | |
-| **Adj. R²** | 0.225 | | 0.24 | |
+| **R²** | 0.484 | | 0.551 | |
+| **Adj. R²** | 0.139 | | 0.039 | |
 
 *p<0.10, **p<0.05, ***p<0.01
 _Notes: Model 1 includes policy variables only. Model 2 adds Black enrollee share and disability gap controls._
@@ -197,18 +197,18 @@ _Notes: Model 1 includes policy variables only. Model 2 adds Black enrollee shar
 
 | State | WR Status | Racial Gap (pp) | Algorithmic Penalty | Est. Excess Black Losses | Est. Total Coverage Losses |
 |-------|-----------|----------------|--------------------|-----------------------|-----------------------------|
-| GA | active | 6.2 | 1.3 | 39,304 | 82,316 |
-| FL | pending | 4.5 | 1.7 | 31,992 | 155,441 |
-| LA | pending | 6.6 | -0.0 | 30,634 | 55,335 |
-| OH | pending | 5.5 | 1.9 | 24,940 | 93,592 |
-| NC | active | 4.3 | 2.4 | 20,422 | 84,718 |
-| MI | blocked | 5.2 | 2.0 | 19,842 | 82,687 |
-| TX | pending | 4.8 | 1.7 | 19,483 | 148,911 |
-| TN | pending | 4.5 | 2.0 | 10,965 | 52,082 |
-| IN | active | 5.3 | 1.3 | 8,031 | 50,342 |
-| WI | blocked | 5.5 | 3.0 | 6,606 | 36,595 |
-| KY | blocked | 5.4 | 0.7 | 5,846 | 46,848 |
-| AZ | pending | 4.5 | -0.8 | 3,158 | 73,125 |
+| GA | active | 6.2 | -13.6 | 39,304 | 82,316 |
+| FL | pending | 4.5 | -12.3 | 31,992 | 155,441 |
+| LA | pending | 6.6 | -15.9 | 30,634 | 55,335 |
+| OH | pending | 5.5 | -15.1 | 24,940 | 93,592 |
+| NC | active | 4.3 | -9.4 | 20,422 | 84,718 |
+| MI | blocked | 5.2 | -5.5 | 19,842 | 82,687 |
+| TX | pending | 4.8 | -7.1 | 19,483 | 148,911 |
+| TN | pending | 4.5 | -8.3 | 10,965 | 52,082 |
+| IN | active | 6.3 | -4.1 | 9,547 | 45,930 |
+| WI | blocked | 5.5 | -3.8 | 6,606 | 36,595 |
+| KY | blocked | 5.4 | -9.8 | 5,846 | 46,848 |
+| AZ | pending | 4.5 | -22.4 | 3,158 | 73,125 |
 
 _Note: Excess Black losses = (racial gap ÷ 100) × Black expansion population estimate. Total coverage losses estimated using Arkansas 2018 benchmark (6.7% rate). Algorithmic penalty = disability gap (Black-White) minus racial exemption gap._
 

@@ -16,12 +16,12 @@ env/
 # Jupyter
 .ipynb_checkpoints/
 
-# Large data files (download scripts provided; see research/data/real_data_sources.md)
-research/data/*.parquet
-research/data/*.csv
-research/data/*.duckdb
+# Large data files (download scripts provided; see data/real_data_sources.md)
+data/*.parquet
+data/*.csv
+data/*.duckdb
 # Exception: billing_providers.parquet is committed for convenience (37 MB)
-!research/data/billing_providers.parquet
+!data/billing_providers.parquet
 
 # OS
 .DS_Store

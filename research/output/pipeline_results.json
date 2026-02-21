@@ -5,153 +5,153 @@
     "policy_only": {
       "formula": "racial_gap_pp ~ stringency_score + requires_physician_cert + full_ex_parte + uses_hie + uses_cfi + long_claims_lag",
       "n": 16,
-      "r_squared": 0.535,
-      "adj_r_squared": 0.225,
+      "r_squared": 0.484,
+      "adj_r_squared": 0.139,
       "coefficients": {
         "Intercept": {
-          "coef": 8.1613,
-          "se": 1.401,
-          "p_value": 0.0003,
-          "ci_lower": 4.9919,
-          "ci_upper": 11.3307
+          "coef": 8.6917,
+          "se": 1.5631,
+          "p_value": 0.0004,
+          "ci_lower": 5.1558,
+          "ci_upper": 12.2276
         },
         "stringency_score": {
-          "coef": -0.5124,
-          "se": 0.2788,
-          "p_value": 0.0992,
-          "ci_lower": -1.1431,
-          "ci_upper": 0.1183
+          "coef": -0.6383,
+          "se": 0.3111,
+          "p_value": 0.0704,
+          "ci_lower": -1.342,
+          "ci_upper": 0.0653
         },
         "requires_physician_cert": {
-          "coef": -0.5896,
-          "se": 0.7836,
-          "p_value": 0.471,
-          "ci_lower": -2.3622,
-          "ci_upper": 1.1829
+          "coef": -0.5617,
+          "se": 0.8742,
+          "p_value": 0.5365,
+          "ci_lower": -2.5393,
+          "ci_upper": 1.4159
         },
         "full_ex_parte": {
-          "coef": -0.6614,
-          "se": 0.7517,
-          "p_value": 0.4018,
-          "ci_lower": -2.3618,
-          "ci_upper": 1.0391
+          "coef": -0.5021,
+          "se": 0.8386,
+          "p_value": 0.5641,
+          "ci_lower": -2.3992,
+          "ci_upper": 1.395
         },
         "uses_hie": {
-          "coef": 0.1659,
-          "se": 1.0017,
-          "p_value": 0.8721,
-          "ci_lower": -2.1001,
-          "ci_upper": 2.432
+          "coef": 0.6022,
+          "se": 1.1176,
+          "p_value": 0.603,
+          "ci_lower": -1.9259,
+          "ci_upper": 3.1304
         },
         "uses_cfi": {
-          "coef": 0.7233,
-          "se": 1.205,
-          "p_value": 0.5631,
-          "ci_lower": -2.0025,
-          "ci_upper": 3.4491
+          "coef": 0.7766,
+          "se": 1.3443,
+          "p_value": 0.5776,
+          "ci_lower": -2.2644,
+          "ci_upper": 3.8177
         },
         "long_claims_lag": {
-          "coef": -1.4723,
-          "se": 0.8041,
-          "p_value": 0.1003,
-          "ci_lower": -3.2912,
-          "ci_upper": 0.3467
+          "coef": -1.6559,
+          "se": 0.8971,
+          "p_value": 0.098,
+          "ci_lower": -3.6853,
+          "ci_upper": 0.3734
         }
       },
-      "aic": 47.12,
-      "bic": 52.53
+      "aic": 50.62,
+      "bic": 56.03
     },
     "with_demographics": {
       "formula": "racial_gap_pp ~ stringency_score + requires_physician_cert + full_ex_parte + uses_hie + uses_cfi + long_claims_lag + black_pct + disability_gap_black_white",
       "n": 16,
-      "r_squared": 0.645,
-      "adj_r_squared": 0.24,
+      "r_squared": 0.551,
+      "adj_r_squared": 0.039,
       "coefficients": {
         "Intercept": {
-          "coef": 5.4015,
-          "se": 2.3851,
-          "p_value": 0.0579,
-          "ci_lower": -0.2383,
-          "ci_upper": 11.0414
+          "coef": 7.3907,
+          "se": 2.204,
+          "p_value": 0.0122,
+          "ci_lower": 2.1791,
+          "ci_upper": 12.6022
         },
         "stringency_score": {
-          "coef": -0.4478,
-          "se": 0.2831,
-          "p_value": 0.1577,
-          "ci_lower": -1.1173,
-          "ci_upper": 0.2217
+          "coef": -0.5263,
+          "se": 0.3507,
+          "p_value": 0.1771,
+          "ci_lower": -1.3555,
+          "ci_upper": 0.3029
         },
         "requires_physician_cert": {
-          "coef": -0.3317,
-          "se": 0.89,
-          "p_value": 0.7204,
-          "ci_lower": -2.4362,
-          "ci_upper": 1.7728
+          "coef": -0.3347,
+          "se": 1.1044,
+          "p_value": 0.7707,
+          "ci_lower": -2.9463,
+          "ci_upper": 2.2769
         },
         "full_ex_parte": {
-          "coef": -0.3834,
-          "se": 0.8195,
-          "p_value": 0.6541,
-          "ci_lower": -2.3213,
-          "ci_upper": 1.5545
+          "coef": -0.1998,
+          "se": 0.9708,
+          "p_value": 0.8428,
+          "ci_lower": -2.4953,
+          "ci_upper": 2.0957
         },
         "uses_hie": {
-          "coef": 0.0529,
-          "se": 1.0161,
-          "p_value": 0.9599,
-          "ci_lower": -2.3498,
-          "ci_upper": 2.4556
+          "coef": 0.4067,
+          "se": 1.3134,
+          "p_value": 0.7658,
+          "ci_lower": -2.699,
+          "ci_upper": 3.5124
         },
         "uses_cfi": {
-          "coef": 0.4665,
-          "se": 1.2099,
-          "p_value": 0.7113,
-          "ci_lower": -2.3946,
-          "ci_upper": 3.3276
+          "coef": 0.4069,
+          "se": 1.5482,
+          "p_value": 0.8002,
+          "ci_lower": -3.254,
+          "ci_upper": 4.0679
         },
         "long_claims_lag": {
-          "coef": -1.0255,
-          "se": 0.8588,
-          "p_value": 0.2713,
-          "ci_lower": -3.0561,
-          "ci_upper": 1.0052
+          "coef": -1.2316,
+          "se": 1.089,
+          "p_value": 0.2953,
+          "ci_lower": -3.8067,
+          "ci_upper": 1.3435
         },
         "black_pct": {
-          "coef": 0.0171,
-          "se": 0.0282,
-          "p_value": 0.564,
-          "ci_lower": -0.0497,
-          "ci_upper": 0.0839
+          "coef": 0.028,
+          "se": 0.0292,
+          "p_value": 0.3694,
+          "ci_lower": -0.0411,
+          "ci_upper": 0.0971
         },
         "disability_gap_black_white": {
-          "coef": 0.2666,
-          "se": 0.3097,
-          "p_value": 0.4178,
-          "ci_lower": -0.4656,
-          "ci_upper": 0.9989
+          "coef": 0.0296,
+          "se": 0.0653,
+          "p_value": 0.6639,
+          "ci_lower": -0.1247,
+          "ci_upper": 0.1839
         }
       },
-      "aic": 46.8,
-      "bic": 53.75
+      "aic": 52.37,
+      "bic": 59.32
     }
   },
-  "total_excess_black_loss": 223833,
+  "total_excess_black_loss": 225349,
   "fairness": {
     "obermeyer_audit": {
       "n_states": 16,
       "n_deciles": 8,
       "mean_need_gap_pp": 6.594,
-      "se_need_gap": 0.275,
-      "t_statistic": 23.943,
+      "se_need_gap": 0.257,
+      "t_statistic": 25.627,
       "p_value": 0.0,
       "statistically_significant": true,
-      "black_frail_exempt_pct": 11.79,
+      "black_frail_exempt_pct": 12.21,
       "white_frail_exempt_pct": 13.74,
-      "frailty_exempt_gap": 1.95,
+      "frailty_exempt_gap": 1.53,
       "decile_summary": [
         {
           "score_decile": 0,
-          "mean_score": 8.5,
+          "mean_score": 8.15,
           "need_black": 36.650000000000006,
           "need_white": 30.5,
           "n_states": 2,
@@ -191,19 +191,19 @@
         },
         {
           "score_decile": 5,
-          "mean_score": 16.549999999999997,
-          "need_black": 35.599999999999994,
-          "need_white": 28.950000000000003,
+          "mean_score": 16.799999999999997,
+          "need_black": 35.45,
+          "need_white": 28.5,
           "n_states": 2,
-          "need_gap": 6.6499999999999915
+          "need_gap": 6.950000000000003
         },
         {
           "score_decile": 6,
-          "mean_score": 17.9,
-          "need_black": 36.0,
-          "need_white": 28.15,
+          "mean_score": 21.3,
+          "need_black": 36.15,
+          "need_white": 28.6,
           "n_states": 2,
-          "need_gap": 7.850000000000001
+          "need_gap": 7.549999999999997
         },
         {
           "score_decile": 7,
@@ -214,14 +214,19 @@
           "need_gap": 6.549999999999997
         }
       ],
-      "interpretation": "At equal algorithm-predicted exemption scores, Black Medicaid enrollees have on average 6.59pp higher disability burden than White enrollees (t=23.94, p=0.0000). This gap is statistically significant, consistent with systematic under-identification of Black enrollees in claims-based frailty algorithms."
+      "interpretation": "At equal algorithm-predicted exemption scores, Black Medicaid enrollees have on average 6.59pp higher disability burden than White enrollees (t=25.63, p=0.0000). This gap is statistically significant, consistent with systematic under-identification of Black enrollees in claims-based frailty algorithms."
     },
     "equalized_odds": {
       "n_states": 16,
-      "mean_tpr_gap": 0.2337,
+      "mean_tpr_gap": 0.2384,
       "mean_fpr_gap": 0.0039,
       "pct_states_violating": 100.0,
       "worst_states": [
+        {
+          "state": "IN",
+          "tpr_gap": 0.33188288221845275,
+          "fpr_gap": 0.0
+        },
         {
           "state": "WI",
           "tpr_gap": 0.3277555252831263,
@@ -231,11 +236,6 @@
           "state": "NY",
           "tpr_gap": 0.28980891719745216,
           "fpr_gap": 0.021080368906455847
-        },
-        {
-          "state": "GA",
-          "tpr_gap": 0.2888660082370346,
-          "fpr_gap": 0.0
         }
       ],
       "state_detail": [
@@ -308,14 +308,14 @@
           "state": "IN",
           "state_name": "Indiana",
           "stringency_score": 5.8,
-          "tpr_black": 0.3598901098901099,
-          "tpr_white": 0.6174496644295302,
-          "tpr_gap": 0.2575595545394203,
+          "tpr_black": 0.543956043956044,
+          "tpr_white": 0.8758389261744968,
+          "tpr_gap": 0.33188288221845275,
           "fpr_black": 0.0,
           "fpr_white": 0.0,
           "fpr_gap": 0.0,
           "equalized_odds_violation": 1,
-          "racial_gap_pp": 5.299999999999999
+          "racial_gap_pp": 6.300000000000001
         },
         {
           "state": "KY",
@@ -468,11 +468,11 @@
       "interpretation": "Mean calibration gap: 1.20pp (Black frailty rate higher than White at equal algorithm scores). NOT calibrated (p=0.008)."
     },
     "demographic_parity": {
-      "mean_exemption_black": 11.79,
-      "mean_exemption_white": 16.74,
-      "mean_exemption_overall": 14.85,
-      "mean_racial_gap": 4.81,
-      "se_racial_gap": 0.258,
+      "mean_exemption_black": 12.21,
+      "mean_exemption_white": 16.59,
+      "mean_exemption_overall": 14.63,
+      "mean_racial_gap": 4.87,
+      "se_racial_gap": 0.273,
       "states_analyzed": 16
     }
   },
