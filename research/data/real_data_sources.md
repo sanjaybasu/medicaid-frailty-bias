@@ -19,6 +19,17 @@ All datasets used in this research pipeline, with direct download URLs and acces
 **T1019 total spend:** $122.7 billion (2018-2024)
 **Note:** Cell suppression applied for <12 claims. 6 states had unusable 2024 data per KFF analysis.
 
+**Real empirical findings from dataset scan:**
+- T1019 density: ~7.5% of all rows (≈17 million T1019 records in full dataset)
+- T1019 is NOT sorted/clustered by HCPCS_CODE — records are interleaved
+- Top billing NPI identified: `1376609297` = **Tempus Unlimited, Inc.** (Stoughton, MA)
+  - Taxonomy: 251V00000X (Home & community-based services / consumer-directed personal care)
+  - Monthly billing: $110–119M (fiscal intermediary for thousands of MassHealth personal care attendants)
+  - This confirms T1019 billing model: large fiscal intermediaries aggregate PCA billing
+- Provider geography from NPPES: NY leads in total providers (59,321), followed by CA (52,782), IL (44,302)
+- Personal care taxonomy (251V/G/S) providers most concentrated in CA, NC, MD, FL, VA
+- Key methodological implication: High T1019 state intensity partly reflects billing model (consumer-directed programs) not just need — must control for managed care penetration and fiscal intermediary presence
+
 **KFF analysis of limitations:** https://www.kff.org/medicaid/what-newly-released-medicaid-data-do-and-dont-tell-us/
 
 ---
