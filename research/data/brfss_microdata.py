@@ -143,8 +143,8 @@ def _standardize_columns(df: pd.DataFrame) -> pd.DataFrame:
             rename_map[candidate] = 'state_fips'
             break
 
-    # Race
-    for candidate in ['_RACE', '_RACEGR3', '_RACE_G1']:
+    # Race — BRFSS 2022 renamed _RACE → _RACE1; try all known variants
+    for candidate in ['_RACE', '_RACE1', '_IMPRACE', '_RACEG22', '_RACEGR3', '_RACEGR4', '_RACE_G1']:
         if candidate in df.columns:
             rename_map[candidate] = 'race_code'
             break
@@ -171,7 +171,9 @@ def _standardize_columns(df: pd.DataFrame) -> pd.DataFrame:
         ('DEAF', 'diff_hearing'),
         ('MEDCOST1', 'cost_barrier'),
         ('MEDCOST', 'cost_barrier'),
-        ('_LLCPWT', 'weight'),
+        ('_LLCPWT', 'weight'),   # pre-2022
+        ('_LLCPWT2', 'weight'),  # BRFSS 2022 renamed weight
+        ('_CLLCPWT', 'weight'),  # cellular landline combined weight
         ('LLCPWT', 'weight'),
         ('INCOME3', 'income_code'),
         ('INCOME2', 'income_code'),
@@ -332,7 +334,8 @@ def run_brfss_logistic_regression(df: pd.DataFrame) -> dict:
     model_df = model_df.dropna(subset=['any_disability', 'black', 'state'])
 
     if len(model_df) < 200:
-        return {'error': 'Insufficient BRFSS Medicaid sample for regression', 'n': len(model_df)}
+        err = {'error': 'Insufficient BRFSS Medicaid sample for regression', 'n': len(model_df)}
+        return {'unadjusted_state_FE': err, 'fully_adjusted': err}
 
     results = {}
     for name, formula in [
