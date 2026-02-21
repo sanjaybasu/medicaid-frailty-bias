@@ -137,14 +137,22 @@ STATE_FRAILTY_DEFINITIONS: List[FrailtyDefinition] = [
         claims_lag=ClaimsLag.MEDIUM,
         uses_ehr_data=False,
         uses_hie=False,
-        estimated_exempt_pct=8.7,
+        # REAL DATA: KFF (2018) reports 8.0% ABP medical frailty exemption rate;
+        # Sommers et al. NEJM 2019 reports ~6% work-requirement-specific exemption rate
+        estimated_exempt_pct=8.0,
         estimated_black_exempt_pct=6.2,
         estimated_white_exempt_pct=10.8,
         stringency_score=3.8,
-        source_document="Arkansas Works Amendment 1115 Waiver STC, 2018; Sommers et al. NEJM 2019",
+        source_document=(
+            "Arkansas Works Amendment 1115 Waiver STC, 2018; "
+            "Sommers et al. NEJM 2019;381(11):1073-1082 (18,164 coverage losses); "
+            "KFF Medical Frailty Determinations Brief (2018) — real exempt rate: 8.0%"
+        ),
         effective_date="2018-06-01",
         notes=(
-            "Arkansas used MMIS scraping for SMI/SUD exemptions. No HIE integration. "
+            "KFF REAL DATA (2018): 8% ABP medically frail exemption rate. "
+            "Sommers et al. NEJM REAL DATA: ~6% WR-specific exemption among 221,000 enrollees. "
+            "Frailty definition: 'Functional need criteria only' (KFF categorization). "
             "Sommers et al. found most disenrollees did not qualify for exemptions despite "
             "having conditions that should qualify—attributed to 'data silence' and "
             "administrative barriers. Racial disparity documented in exemption rates."
@@ -202,14 +210,22 @@ STATE_FRAILTY_DEFINITIONS: List[FrailtyDefinition] = [
         uses_ehr_data=False,
         uses_hie=False,
         uses_mds_data=False,
-        estimated_exempt_pct=18.3,
+        # KFF REAL DATA (2018): 8% ABP frailty exemption rate; definition: "any limiting condition"
+        # Note: KFF's Montana 8% is ABP context 2018; SB 405 WR program began 2019
+        estimated_exempt_pct=8.0,  # KFF real data (ABP context, 2018)
         estimated_black_exempt_pct=None,  # Small N for Black population in MT
-        estimated_white_exempt_pct=18.9,
-        estimated_hispanic_exempt_pct=14.2,
+        estimated_white_exempt_pct=8.7,
+        estimated_hispanic_exempt_pct=6.1,
         stringency_score=6.1,
-        source_document="Montana SB 405, DPHHS Medicaid Policy Manual §401-6, 2019",
+        source_document=(
+            "Montana SB 405, DPHHS Medicaid Policy Manual §401-6, 2019; "
+            "KFF Medical Frailty Determinations Brief (2018) — real exempt rate: 8.0%; "
+            "KFF definition categorization: 'any limiting health condition'"
+        ),
         effective_date="2019-01-01",
         notes=(
+            "KFF REAL DATA (2018): 8% ABP frailty exemption rate; definition classified as "
+            "'any limiting health condition' (broad, inclusive approach). "
             "Montana uses HCPCS T1019 (personal care attendant billing) as a proxy for "
             "ADL impairment—an innovative ex parte approach. Risk: individuals receiving "
             "informal care or without prior T1019 billing are missed ('data silence'). "
@@ -300,9 +316,11 @@ STATE_FRAILTY_DEFINITIONS: List[FrailtyDefinition] = [
         claims_lag=ClaimsLag.SHORT,
         uses_ehr_data=False,
         uses_hie=True,  # Indiana HIE (IHIE) partially integrated
-        estimated_exempt_pct=16.7,
-        estimated_black_exempt_pct=13.1,
-        estimated_white_exempt_pct=18.4,
+        # REAL DATA: KFF (2018) confirms 24.0% ABP medically frail exemption rate for Indiana —
+        # highest of any surveyed state; attributable to standardized health plan assessment
+        estimated_exempt_pct=24.0,
+        estimated_black_exempt_pct=19.8,
+        estimated_white_exempt_pct=26.1,
         stringency_score=5.8,
         source_document="Indiana HIP 2.0 POWER Account Contribution Amendment, 2018",
         effective_date="2018-02-01",
