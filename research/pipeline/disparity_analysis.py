@@ -6,9 +6,8 @@ bias analysis framework, following the Obermeyer et al. (2019) audit methodology
 
 The central analysis:
     Compare "Cost-Proxy" (spending-based risk, proxied by T1019 provider intensity
-    and claims-based frailty score) with "True-Need" (disability-adjusted life years,
-    functional limitation prevalence, and MDS-derived impairment rates from
-    the CDC BRFSS and literature-based state estimates).
+    and claims-based frailty score) with "True-Need" (functional limitation
+    prevalence measured at the individual level from three public-access surveys).
 
 Key models:
     1. Logistic regression: P(frailty_exempt | cost_proxy, race, state)
@@ -18,11 +17,28 @@ Key models:
     3. Decomposition: Blinder-Oaxaca decomposition of the Black-White
        exemption gap into explained (care utilization) vs. unexplained components
 
-Data sources used:
+Need-side data hierarchy (addresses ecological fallacy concern):
+    PRIMARY   — ACS PUMS 2022 individual-level (acs_pums.py)
+                Individual-level logistic regression among Medicaid adults 19-64
+                by race × state. Replaces ecological BRFSS aggregates.
+    SECONDARY — BRFSS individual microdata 2022 (brfss_microdata.py)
+                Independent replication using CDC survey instrument.
+                Continuity with prior ecological BRFSS estimates.
+    TERTIARY  — MEPS 2022 national functional limitations (meps_functional.py)
+                Income- and education-adjusted sensitivity analysis addressing
+                socioeconomic confounding (Reviewer 3). National only.
+
+    ECOLOGICAL FALLBACK — Hardcoded BRFSS state×race aggregates (BRFSS_DISABILITY)
+                          retained for backward compatibility and for states/cells
+                          where individual-level ACS sample is too small (<30).
+
+Data sources:
     - T1019 provider intensity (from HHS Medicaid Provider Spending)
     - KFF race/ethnicity enrollment shares
     - State frailty definition stringency (literature-derived)
-    - CDC BRFSS disability prevalence by state and race (2022)
+    - ACS PUMS 2022 disability prevalence by state and race (individual-level, PRIMARY)
+    - BRFSS 2022 microdata (individual-level, SECONDARY)
+    - MEPS 2022 functional limitations (national, TERTIARY)
     - MACPAC state-level exemption rate estimates (2024 report)
 """
 
@@ -42,6 +58,169 @@ from sklearn.model_selection import cross_val_score
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 from pipeline.cohort import build_state_cohort
+
+
+# ---------------------------------------------------------------------------
+# Individual-level need-side data integration
+# ---------------------------------------------------------------------------
+
+def load_individual_level_disability(
+    prefer_acs: bool = True,
+    load_brfss: bool = True,
+    load_meps: bool = True,
+) -> Dict:
+    """
+    Attempt to load individual-level disability estimates from the three
+    public-access surveys. Falls back gracefully if data files are not yet
+    downloaded.
+
+    Returns a dict with keys 'acs', 'brfss', 'meps', each containing either:
+        - A state × race prevalence DataFrame (acs, brfss)
+        - A national race prevalence DataFrame (meps)
+        - None if data not available
+
+    The ACS prevalence table is the PRIMARY source for need-side estimates.
+    BRFSS individual-level is SECONDARY. MEPS is TERTIARY (national only).
+    """
+    results = {'acs': None, 'brfss': None, 'meps': None,
+               'acs_regression': None, 'brfss_regression': None,
+               'meps_regression': None}
+
+    if prefer_acs:
+        try:
+            from data.acs_pums import (
+                load_medicaid_adults as acs_load,
+                compute_state_race_prevalence as acs_prev,
+                compute_black_white_gap as acs_gap,
+                run_individual_logistic_regression as acs_reg,
+            )
+            cache = Path(__file__).parent.parent / 'data' / 'acs_pums_medicaid_adults.parquet'
+            if cache.exists():
+                df = acs_load()
+                results['acs'] = acs_prev(df)
+                results['acs_gap'] = acs_gap(results['acs'])
+                results['acs_regression'] = acs_reg(df)
+                print("  [OK] ACS PUMS individual-level data loaded (PRIMARY)")
+            else:
+                print("  [SKIP] ACS PUMS cache not found — run data/acs_pums.py to download")
+        except Exception as e:
+            print(f"  [WARN] ACS PUMS load failed: {e}")
+
+    if load_brfss:
+        try:
+            from data.brfss_microdata import (
+                load_brfss_medicaid_adults as brfss_load,
+                compute_state_race_prevalence as brfss_prev,
+                run_brfss_logistic_regression as brfss_reg,
+            )
+            cache = Path(__file__).parent.parent / 'data' / 'brfss_2022_medicaid_adults.parquet'
+            if cache.exists():
+                df = brfss_load()
+                results['brfss'] = brfss_prev(df)
+                results['brfss_regression'] = brfss_reg(df)
+                print("  [OK] BRFSS individual microdata loaded (SECONDARY)")
+            else:
+                print("  [SKIP] BRFSS cache not found — run data/brfss_microdata.py to download")
+        except Exception as e:
+            print(f"  [WARN] BRFSS load failed: {e}")
+
+    if load_meps:
+        try:
+            from data.meps_functional import (
+                load_meps_medicaid_adults as meps_load,
+                compute_national_race_prevalence as meps_prev,
+                run_meps_regression as meps_reg,
+            )
+            cache = Path(__file__).parent.parent / 'data' / 'meps_2022_medicaid_adults.parquet'
+            if cache.exists():
+                df = meps_load()
+                results['meps'] = meps_prev(df)
+                results['meps_regression'] = meps_reg(df)
+                print("  [OK] MEPS functional limitations loaded (TERTIARY)")
+            else:
+                print("  [SKIP] MEPS cache not found — run data/meps_functional.py to download")
+        except Exception as e:
+            print(f"  [WARN] MEPS load failed: {e}")
+
+    return results
+
+
+def merge_individual_level_into_cohort(
+    cohort: pd.DataFrame,
+    individual_data: Dict,
+) -> pd.DataFrame:
+    """
+    Merge individual-level disability estimates (ACS primary, BRFSS secondary)
+    into the state-level cohort, replacing the ecological BRFSS aggregates
+    for states where individual-level sample is adequate (n>=30 per cell).
+
+    For states where individual-level sample is inadequate, the ecological
+    BRFSS_DISABILITY fallback values are retained.
+
+    Adds columns:
+        disability_black_acs    — ACS individual-level (primary)
+        disability_white_acs    — ACS individual-level (primary)
+        disability_black_brfss  — BRFSS individual-level (secondary)
+        disability_white_brfss  — BRFSS individual-level (secondary)
+        disability_black        — Best available (ACS > BRFSS > ecological)
+        disability_white        — Best available (ACS > BRFSS > ecological)
+        need_data_source        — Which source was used for primary estimate
+    """
+    df = cohort.copy()
+
+    # ACS primary
+    if individual_data.get('acs') is not None:
+        acs = individual_data['acs']
+        for race_eth, col_suffix in [('black', 'black_acs'), ('white', 'white_acs')]:
+            race_df = acs[acs['race_eth'] == race_eth].set_index('state')
+            df[f'disability_{col_suffix}'] = df['state'].map(
+                race_df['disability_pct']
+            )
+            df[f'adl_iadl_{col_suffix}'] = df['state'].map(
+                race_df['adl_iadl_pct']
+            )
+
+    # BRFSS secondary
+    if individual_data.get('brfss') is not None:
+        brfss = individual_data['brfss']
+        for race_eth, col_suffix in [('black', 'black_brfss'), ('white', 'white_brfss')]:
+            race_df = brfss[brfss['race_eth'] == race_eth].set_index('state')
+            df[f'disability_{col_suffix}'] = df['state'].map(
+                race_df['disability_pct']
+            )
+
+    # Best available: ACS > BRFSS > ecological fallback
+    for race in ['black', 'white']:
+        acs_col = f'disability_{race}_acs'
+        brfss_col = f'disability_{race}_brfss'
+        eco_col = f'disability_{race}'    # from build_disparity_dataset ecological merge
+
+        if acs_col in df.columns:
+            df[f'disability_{race}_best'] = df[acs_col].fillna(
+                df.get(brfss_col, pd.Series(np.nan, index=df.index))
+            ).fillna(df.get(eco_col, pd.Series(np.nan, index=df.index)))
+        elif brfss_col in df.columns:
+            df[f'disability_{race}_best'] = df[brfss_col].fillna(
+                df.get(eco_col, pd.Series(np.nan, index=df.index))
+            )
+
+    # Tag data source used
+    def _source(row):
+        if 'disability_black_acs' in row and pd.notna(row.get('disability_black_acs')):
+            return 'ACS_individual'
+        elif 'disability_black_brfss' in row and pd.notna(row.get('disability_black_brfss')):
+            return 'BRFSS_individual'
+        return 'BRFSS_ecological'
+
+    df['need_data_source'] = df.apply(_source, axis=1)
+
+    # Recompute Black-White gap using best available estimates
+    if 'disability_black_best' in df.columns and 'disability_white_best' in df.columns:
+        df['disability_gap_black_white_best'] = (
+            df['disability_black_best'] - df['disability_white_best']
+        )
+
+    return df
 
 
 # ---------------------------------------------------------------------------
@@ -109,19 +288,30 @@ BRFSS_DISABILITY = {
 
 
 def build_disparity_dataset(
-    intensity_df: pd.DataFrame = None
+    intensity_df: pd.DataFrame = None,
+    use_individual_level: bool = True,
 ) -> pd.DataFrame:
     """
     Construct the core disparity analysis dataset combining:
     - State policy characteristics
     - Racial demographic composition
     - T1019 provider intensity (spending-based proxy)
-    - BRFSS disability prevalence (true-need proxy)
+    - Disability prevalence (true-need proxy), sourced from:
+        PRIMARY:  ACS PUMS individual-level (if cache available)
+        SECONDARY: BRFSS individual microdata (if cache available)
+        FALLBACK:  BRFSS state×race ecological aggregates (always available)
     - Frailty exemption rate estimates
+
+    Parameters
+    ----------
+    intensity_df : optional provider intensity DataFrame from stream_t1019.py
+    use_individual_level : if True, attempt to load ACS/BRFSS individual data
+                           and merge over the ecological fallback estimates
     """
     cohort = build_state_cohort()
 
-    # Add BRFSS disability data
+    # --- Ecological fallback: BRFSS state×race aggregates ---
+    # Retained for backward compatibility and cells with inadequate individual n
     brfss_rows = []
     for state, vals in BRFSS_DISABILITY.items():
         brfss_rows.append({
@@ -132,11 +322,23 @@ def build_disparity_dataset(
             'disability_hispanic': vals['hispanic'],
         })
     brfss_df = pd.DataFrame(brfss_rows)
-
-    # Merge
     df = cohort.merge(brfss_df, on='state', how='left')
 
-    # Merge provider intensity if provided
+    # --- Attempt individual-level overlay (PRIMARY/SECONDARY) ---
+    if use_individual_level:
+        print("\nLoading individual-level disability data...")
+        individual_data = load_individual_level_disability()
+        df = merge_individual_level_into_cohort(df, individual_data)
+        # Store regression results as module-level for report access
+        df.attrs['individual_regressions'] = {
+            k: v for k, v in individual_data.items()
+            if k.endswith('_regression') and v is not None
+        }
+        df.attrs['meps_national'] = individual_data.get('meps')
+    else:
+        df['need_data_source'] = 'BRFSS_ecological'
+
+    # --- Provider intensity ---
     if intensity_df is not None:
         intensity_agg = intensity_df.groupby('state').agg(
             intensity_per_enrollee=('intensity_per_enrollee', 'mean'),
@@ -145,34 +347,43 @@ def build_disparity_dataset(
         ).reset_index()
         df = df.merge(intensity_agg, on='state', how='left')
     else:
-        # Fill with NaN if intensity data not available
         df['intensity_per_enrollee'] = np.nan
         df['provider_density_per_1k'] = np.nan
         df['t1019_coverage_pct'] = np.nan
 
-    # Compute key disparity variables
     df = df.dropna(subset=['disability_overall', 'exempt_pct_overall'])
 
-    # "Label bias" metric: difference between cost-proxy ranking and
-    # true-need ranking by state
-    # Higher disability → higher true need; higher intensity → higher cost proxy
-    # When cost-proxy rank >> true-need rank: over-identification
-    # When cost-proxy rank << true-need rank: under-identification (bias risk)
+    # --- Label bias: cost-proxy rank vs. true-need rank ---
     if df['intensity_per_enrollee'].notna().any():
         df['cost_proxy_rank'] = df['intensity_per_enrollee'].rank(pct=True)
     else:
-        # Fallback: use exemption rate as proxy
         df['cost_proxy_rank'] = df['exempt_pct_overall'].rank(pct=True)
 
-    df['true_need_rank'] = df['disability_overall'].rank(pct=True)
+    # Use best-available disability estimate for true-need ranking
+    need_col = 'disability_overall'  # ecological fallback
+    if 'disability_black_best' in df.columns:
+        # Reconstruct overall from best-available Black + White (weighted avg)
+        df['disability_overall_best'] = (
+            df['disability_black_best'] * df['black_pct'] / 100 +
+            df['disability_white_best'] * df['white_pct'] / 100
+        )
+        if df['disability_overall_best'].notna().sum() >= 10:
+            need_col = 'disability_overall_best'
+
+    df['true_need_rank'] = df[need_col].rank(pct=True)
     df['label_bias_score'] = df['cost_proxy_rank'] - df['true_need_rank']
 
-    # Disability gap: Black - White disability prevalence (positive = Black higher need)
-    df['disability_gap_black_white'] = df['disability_black'] - df['disability_white']
+    # --- Disability gap: use best available ---
+    black_col = 'disability_black_best' if 'disability_black_best' in df.columns else 'disability_black'
+    white_col = 'disability_white_best' if 'disability_white_best' in df.columns else 'disability_white'
+    df['disability_gap_black_white'] = df[black_col] - df[white_col]
 
-    # "Algorithmic penalty" = disability_gap - racial_gap (positive = Black disadvantaged)
-    # A state where Black adults have more disability than white adults (disability_gap > 0)
-    # but smaller exemption gap (racial_gap < disability_gap) is "algorithmically penalizing"
+    # Also keep ecological gap for comparison
+    df['disability_gap_black_white_ecological'] = (
+        df['disability_black'] - df['disability_white']
+    )
+
+    # --- Algorithmic penalty ---
     df['algorithmic_penalty'] = df['disability_gap_black_white'] - df['racial_gap_pp'].fillna(0)
 
     return df
