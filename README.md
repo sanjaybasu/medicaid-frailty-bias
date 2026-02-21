@@ -1,60 +1,83 @@
-# Racial Bias in Medicaid Medically Frail Exemptions
+# Racial Disparities in Medicaid Medically Frail Exemption Rates
 
 Replication code and data pipeline for:
 
-> Basu S. Algorithmic inequality and racial disparities in medically frail exemptions
-> under Medicaid work requirements. *Submitted*, 2026.
+> Basu S, Batniji R. Racial disparities in medically frail exemption rates under
+> Medicaid community engagement requirements: a multi-state analysis. 2026.
+
+See `manuscript.md` for the full manuscript and `output/appendix.md` for the
+supplementary methods.
 
 ---
 
 ## Requirements
 
-```
-pip install -r research/requirements.txt
+```bash
+pip install -r requirements.txt
 ```
 
-Python 3.10+. No proprietary data required; all primary data are public.
+Python 3.10+. No proprietary data are required; all primary data sources are
+public. The largest download (ACS PUMS) is approximately 200 MB compressed.
 
 ---
 
 ## Data Sources
 
-All data are downloaded automatically on first run or can be retrieved manually:
-
-| Dataset | Source | Access |
+| Dataset | Source | Script |
 |---|---|---|
-| HHS Medicaid Provider Spending (227M rows, 2018–2024) | opendata.hhs.gov | Public |
-| KFF Medicaid Enrollees by Race/Ethnicity (T-MSIS 2023) | kff.org | Public |
-| CDC BRFSS Disability Prevalence (DHDS 2022) | cdc.gov/ncbddd/disabilityandhealth | Public |
-| State frailty policy database (17 states) | CMS waiver docs, compiled in-repo | In-repo |
-| NPPES billing provider NPI→state lookup | npiregistry.cms.hhs.gov | Public |
+| HHS Medicaid Provider Spending (227M rows, 2018–2024) | opendata.hhs.gov | `data/stream_t1019.py` |
+| ACS PUMS 1-Year 2022 (individual disability) | census.gov | `data/acs_pums.py` |
+| CDC BRFSS microdata 2022 | cdc.gov/brfss | `data/brfss_microdata.py` |
+| MEPS 2022 functional limitations | meps.ahrq.gov | `data/meps_functional.py` |
+| KFF Medicaid enrollees by race/ethnicity | kff.org | `data/kff_medicaid_demographics.py` |
+| State frailty policy database (17 states) | CMS waiver documents, compiled | `frailty_definitions/state_definitions.py` |
+| NPPES NPI→state lookup (billing providers) | npiregistry.cms.hhs.gov | committed as `data/billing_providers.parquet` |
 
-See `research/data/real_data_sources.md` for URLs, schema, and data quality notes.
+See `data/real_data_sources.md` for URLs, schemas, access notes, and data
+quality caveats. Large cached files (ACS, BRFSS, MEPS parquets) are excluded
+from the repository by `.gitignore`; download scripts are provided.
 
 ---
 
-## Reproducing the Analysis
+## Reproducing All Results
 
 ```bash
-# 1. Download T1019 spending data (streams 227M rows; takes ~2-4 hrs)
-python research/data/stream_t1019.py
+# 1. Install dependencies
+pip install -r requirements.txt
 
-# 2. Run full pipeline and regenerate all tables, figures, and manuscript
-python research/output/generate_report.py
+# 2. (Optional) Download T1019 spending data (~2-4 hrs; set HF_TOKEN for higher limits)
+python data/stream_t1019.py
+
+# 3. (Optional) Download and cache individual-level disability data
+python data/acs_pums.py        # ACS PUMS (~5-10 min)
+python data/brfss_microdata.py # BRFSS  (~10-20 min)
+python data/meps_functional.py # MEPS   (~5 min)
+
+# 4. Run full analysis pipeline (uses cached parquets if present)
+python output/generate_report.py
 ```
 
-Outputs appear in `research/output/`:
-- `health_affairs_report.md` — manuscript
-- `pipeline_results.json` — all numeric results
-- `figures/` — Figures 1–5
-- `tables/` — Tables 1–5 as CSV
+Step 4 uses cached parquets from steps 2–3 if present, or falls back to
+pre-specified state-level estimates. All random seeds are fixed at 42;
+results are exactly reproducible given identical input data.
 
-Individual pipeline modules can be run independently:
+Outputs are written to `output/`:
+- `pipeline_results.json` — all numeric results (cached)
+- `figures/`              — Figures 1–5 (PNG, 200 dpi)
+- `tables/`               — Tables 1–5 (CSV)
+
+---
+
+## Running Individual Modules
+
+Each analysis module is also executable independently:
+
 ```bash
-python research/pipeline/disparity_analysis.py
-python research/bias_analysis/fairness_metrics.py
-python research/causal_inference/callaway_santanna_did.py
-python research/causal_inference/synthetic_control.py
+python pipeline/disparity_analysis.py      # OLS regression, coverage loss
+python bias_analysis/fairness_metrics.py   # Calibration, equalized odds, Obermeyer audit
+python bias_analysis/algorithm_audit.py    # Monte Carlo algorithm simulation on ACS individuals
+python causal_inference/callaway_santanna_did.py  # Staggered DiD
+python causal_inference/synthetic_control.py      # Synthetic control (AR, GA, MT)
 ```
 
 ---
@@ -62,36 +85,62 @@ python research/causal_inference/synthetic_control.py
 ## Repository Structure
 
 ```
-research/
+.
+├── manuscript.md                        # Full manuscript with tables and references
+├── output/appendix.md                   # Supplementary methods and tables
+├── requirements.txt
 ├── data/
-│   ├── stream_t1019.py              # Streams HHS dataset, aggregates T1019 by state×month
-│   ├── kff_medicaid_demographics.py # Fetches KFF race/ethnicity enrollment shares
-│   ├── billing_providers.parquet    # NPI→state lookup (617K rows, downloaded on first run)
-│   └── real_data_sources.md        # Data source documentation
+│   ├── stream_t1019.py                  # HHS dataset streaming (T1019 by state×month)
+│   ├── acs_pums.py                      # ACS PUMS download, filter, disability regression
+│   ├── brfss_microdata.py               # BRFSS microdata download and processing
+│   ├── meps_functional.py               # MEPS functional limitation module
+│   ├── kff_medicaid_demographics.py     # KFF enrollment shares by race/ethnicity
+│   ├── billing_providers.parquet        # NPPES NPI→state lookup (committed, 37 MB)
+│   └── real_data_sources.md             # Source documentation and data quality notes
 ├── frailty_definitions/
-│   └── state_definitions.py        # 17-state policy database with FrailtyDefinition dataclass
+│   └── state_definitions.py             # 17-state frailty policy database (FrailtyDefinition dataclass)
 ├── pipeline/
-│   ├── cohort.py                   # Expansion cohort construction (TAF-equivalent)
-│   ├── disparity_analysis.py       # OLS regression, Oaxaca decomposition, coverage loss
-│   └── provider_intensity.py       # T1019 per-enrollee spending and provider density
+│   ├── cohort.py                        # Expansion cohort construction
+│   ├── disparity_analysis.py            # OLS regression and coverage loss estimation
+│   └── provider_intensity.py            # T1019 provider density analysis
 ├── bias_analysis/
-│   └── fairness_metrics.py         # Calibration, equalized odds, predictive parity, Obermeyer audit
+│   ├── fairness_metrics.py              # Equalized odds, calibration, Obermeyer audit
+│   └── algorithm_audit.py              # Monte Carlo simulation of state algorithms on ACS individuals
 ├── causal_inference/
-│   ├── callaway_santanna_did.py    # Staggered DiD (Callaway & Sant'Anna 2021)
-│   └── synthetic_control.py        # Synthetic control (Abadie et al. 2010)
+│   ├── callaway_santanna_did.py         # Staggered DiD (Callaway & Sant'Anna 2021)
+│   └── synthetic_control.py             # Synthetic control (Abadie et al. 2010)
 └── output/
-    ├── generate_report.py           # Main pipeline orchestrator
-    ├── health_affairs_report.md     # Manuscript
-    ├── pipeline_results.json        # All numeric results (cached)
-    ├── figures/                     # PNG figures
-    └── tables/                      # CSV tables
+    ├── generate_report.py               # Pipeline orchestrator
+    ├── pipeline_results.json            # Cached numeric results
+    ├── appendix.md                      # Supplementary methods
+    ├── figures/                         # PNG figures
+    └── tables/                          # CSV tables
 ```
 
 ---
 
 ## Notes for Reviewers
 
-- The `billing_providers.parquet` file (37 MB) is committed for convenience; it can be regenerated from NPPES at npiregistry.cms.hhs.gov.
-- State-level exemption rates are derived from published waiver evaluation reports, not individual T-MSIS records. Access to ResDAC-restricted TAF files would enable individual-level replication.
-- The full T1019 streaming job (`stream_t1019.py`) takes 2–4 hours without an HF token; set `HF_TOKEN` to increase rate limits.
-- All random seeds are fixed; results are exactly reproducible given the same data.
+- `data/billing_providers.parquet` (37 MB) is committed for convenience; it
+  can be regenerated from the NPPES public file at npiregistry.cms.hhs.gov.
+- State-level exemption rates are derived from published waiver evaluation
+  reports for four states with observed data (GA, AR, IN, NC) and from
+  pre-specified researcher estimates for the remaining 12 states. See
+  `output/appendix.md` Section A.4 for construction details.
+- ResDAC-restricted T-MSIS TAF files would enable individual-level replication
+  of the calibration test; the current analysis operates at the state level.
+- The T1019 streaming job (`data/stream_t1019.py`) processes 227 million rows
+  and takes approximately 2–4 hours without an HF token; set `HF_TOKEN` in
+  your environment to increase API rate limits.
+- All stochastic operations use fixed seed 42; figures and JSON results are
+  exactly reproducible given identical input data.
+
+---
+
+## Citation
+
+```
+Basu S, Batniji R. Racial disparities in medically frail exemption rates under
+Medicaid community engagement requirements: a multi-state analysis. 2026.
+Code: https://github.com/sanjaybasu/medicaid-frailty-bias
+```

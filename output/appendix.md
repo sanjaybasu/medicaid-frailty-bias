@@ -2,9 +2,9 @@
 
 **Supplementary Methods, Tables, and Figures**
 
-*Corresponds to: Basu S. Racial and geographic disparities in medically frail exemption rates under Medicaid work requirements: a multi-state analysis. Health Affairs, submitted 2026.*
+*Corresponds to: Basu S, Batniji R. Racial disparities in medically frail exemption rates under Medicaid community engagement requirements: a multi-state analysis. 2026.*
 
-*All code to reproduce these analyses is available at: https://github.com/sanjaybasu/medicaid-work-monitor (branch: `claude/medicaid-frailty-bias-Pmu4e`)*
+*All code to reproduce these analyses is available at: https://github.com/sanjaybasu/medicaid-frailty-bias (branch: `claude/medicaid-frailty-bias-Pmu4e`)*
 
 ---
 
@@ -36,7 +36,7 @@ The dataset was accessed via the Hugging Face streaming API (`cfahlgren1/medicai
 - First T1019 record at index 0; last within scanned 3 million rows at index 2,999,980
 - Top billing NPI: 1376609297 (Tempus Unlimited, Inc., Stoughton, MA; taxonomy 251V00000X; personal care fiscal intermediary)
 
-The streaming pipeline (`research/data/stream_t1019.py`) joins each T1019 record with NPPES data from `research/data/billing_providers.parquet` to assign state location, then aggregates to state × month billing totals. Billing records with no NPI-to-state match (approximately 3% of T1019 records) are excluded.
+The streaming pipeline (`data/stream_t1019.py`) joins each T1019 record with NPPES data from `data/billing_providers.parquet` to assign state location, then aggregates to state × month billing totals. Billing records with no NPI-to-state match (approximately 3% of T1019 records) are excluded.
 
 **Known data quality issues:**
 - Cell suppression applies to provider-month cells with <12 claims, disproportionately affecting small states and rural areas
@@ -98,7 +98,7 @@ Race-stratified exemption rate data availability varies substantially across sta
 - Indiana: HIP 2.0 annual evaluation reports 2019–2022 (administrative data)
 - North Carolina: NC Medicaid Division reports 2023–2024
 
-**Pre-specified estimates (12 states):** For states without published race-stratified program evaluations, exemption rates were pre-specified by the research team in the state policy database (`research/frailty_definitions/state_definitions.py`, fields `estimated_black_exempt_pct`, `estimated_white_exempt_pct`) based on:
+**Pre-specified estimates (12 states):** For states without published race-stratified program evaluations, exemption rates were pre-specified by the research team in the state policy database (`frailty_definitions/state_definitions.py`, fields `estimated_black_exempt_pct`, `estimated_white_exempt_pct`) based on:
 
 1. Published overall exemption rate estimates from KFF and MACPAC for each state
 2. BRFSS Black/White disability prevalence ratios applied proportionally to stratify rates by race
@@ -195,7 +195,7 @@ This manuscript was internally reviewed from the perspectives of four expert dom
 
 ---
 
-### Reviewer 1 (Health Affairs Policy Perspective)
+### Reviewer 1 (Health Policy Perspective)
 
 **Critique 1.1 [MAJOR]: OBBBA framing is speculative; the act postdates antecedent state programs.**
 
@@ -412,7 +412,7 @@ This manuscript was internally reviewed from the perspectives of four expert dom
 
 ## Figure S1: Parallel Trends Validation {#figure-s1}
 
-*(See `research/output/figures/event_study_did.png`)*
+*(See `output/figures/event_study_did.png`)*
 
 The event study figure plots ATT(g,t) estimates with 95% CIs for all relative time periods. Pre-treatment ATT estimates (relative time < 0) cluster near zero (mean: −0.023 pp) without systematic trend, consistent with the parallel trends assumption. A sharp increase in ATT is observed at relative time 0 (program adoption), with the aggregate ATT of 1.24 pp driven by the period immediately following adoption.
 
@@ -420,7 +420,7 @@ The event study figure plots ATT(g,t) estimates with 95% CIs for all relative ti
 
 ## Figure S2: Ecological Calibration Test by Octile {#figure-s2}
 
-*(See `research/output/figures/obermeyer_audit.png`)*
+*(See `output/figures/obermeyer_audit.png`)*
 
 The figure plots mean BRFSS disability prevalence for Black (red) and white (blue) enrollees against overall state exemption rate octile. The vertical distance between lines at each octile represents the disability-exemption mismatch (mean: 6.59 pp). The consistent gap across octiles indicates that the mismatch does not narrow with increasing algorithm generosity.
 
@@ -428,7 +428,7 @@ The figure plots mean BRFSS disability prevalence for Black (red) and white (blu
 
 ## Figure S3: Geographic Analysis Detail {#figure-s3}
 
-*(See `research/output/figures/figure1_main_findings.png` panel 4)*
+*(See `output/figures/figure1_main_findings.png` panel 4)*
 
 Scatter plots of (a) state personal care provider count vs. racial exemption gap (Pearson r=−0.516, p=0.041) and (b) state rural population % vs. racial exemption gap (r=0.508, p=0.044). Georgia is labeled as an outlier (116 PC providers, 6.2 pp gap). California and New York cluster in the low-gap, high-provider quadrant.
 
@@ -438,36 +438,36 @@ Scatter plots of (a) state personal care provider count vs. racial exemption gap
 
 All analysis code is implemented in Python 3.10+ and is fully version-controlled at:
 
-**Repository:** https://github.com/sanjaybasu/medicaid-work-monitor
+**Repository:** https://github.com/sanjaybasu/medicaid-frailty-bias
 **Branch:** `claude/medicaid-frailty-bias-Pmu4e`
-**Committed results:** `research/output/pipeline_results.json`, `research/output/geographic_results.json`
+**Committed results:** `output/pipeline_results.json`, `output/geographic_results.json`
 
 **To reproduce all analyses:**
 ```bash
 # Install dependencies
-pip install -r research/requirements.txt
+pip install -r requirements.txt
 
 # Download T1019 data (requires ~2-4 hours; set HF_TOKEN for higher rate limits)
-python research/data/stream_t1019.py
+python data/stream_t1019.py
 
 # Run full pipeline
-python research/output/generate_report.py
+python output/generate_report.py
 ```
 
 **Random seeds:** All stochastic operations (bootstrap replicates, microsimulation) use fixed random seeds (seed=42 throughout). Results are exactly reproducible.
 
-**Operating environment:** Analyses were conducted on Linux (kernel 4.4.0) with Python 3.10.12 and package versions specified in `research/requirements.txt`. The streaming analysis used Hugging Face datasets library 2.x with the `cfahlgren1/medicaid-provider-spending` dataset (HF Hub, accessed February 2026).
+**Operating environment:** Analyses were conducted on Linux (kernel 4.4.0) with Python 3.10.12 and package versions specified in `requirements.txt`. The streaming analysis used Hugging Face datasets library 2.x with the `cfahlgren1/medicaid-provider-spending` dataset (HF Hub, accessed February 2026).
 
 **Data provenance:**
 - `billing_providers.parquet` (37 MB): Generated from NPPES public file (December 2025), committed to repository
 - T1019 streaming data: Downloaded from HHS OpenData / HF Hub; not committed due to size (2.9 GB); download script provided
-- BRFSS DHDS values: Transcribed from CDC DHDS data portal (https://dhds.cdc.gov); hardcoded in `research/pipeline/disparity_analysis.py:BRFSS_DISABILITY` with source URL and access date
-- State policy data: Transcribed from primary waiver documents; coded in `research/frailty_definitions/state_definitions.py` with source document metadata per state
+- BRFSS DHDS values: Transcribed from CDC DHDS data portal (https://dhds.cdc.gov); hardcoded in `pipeline/disparity_analysis.py:BRFSS_DISABILITY` with source URL and access date
+- State policy data: Transcribed from primary waiver documents; coded in `frailty_definitions/state_definitions.py` with source document metadata per state
 
 **Intermediate outputs committed for reviewer convenience:**
-- `research/output/pipeline_results.json`: All quantitative results from the main pipeline
-- `research/output/geographic_results.json`: Geographic provider density analysis results
-- `research/output/tables/*.csv`: All manuscript tables
-- `research/output/figures/*.png`: All manuscript figures
+- `output/pipeline_results.json`: All quantitative results from the main pipeline
+- `output/geographic_results.json`: Geographic provider density analysis results
+- `output/tables/*.csv`: All manuscript tables
+- `output/figures/*.png`: All manuscript figures
 
-*Correspondence: Sanjay Basu, MD PhD. Repository issues: https://github.com/sanjaybasu/medicaid-work-monitor/issues*
+*Correspondence: Sanjay Basu, MD PhD; Rajaie Batniji, MD PhD. Repository issues: https://github.com/sanjaybasu/medicaid-frailty-bias/issues*
