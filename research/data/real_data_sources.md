@@ -220,8 +220,8 @@ the conceptual measurement approach.
 concern (Reviewer 3: income and health literacy as confounders of racial disability gap).
 **Source:** AHRQ Medical Expenditure Panel Survey, 2022 Full Year Consolidated File (h233)
 **Access:** Public, no registration required
-**Download:** https://meps.ahrq.gov/data_files/pufs/h233/h233csv.zip
-**Format:** CSV (~10MB compressed)
+**Download:** https://meps.ahrq.gov/data_files/pufs/h243/h243ssp.zip
+**Format:** SAS transport (.ssp, ~7MB compressed) — h243 = calendar year 2022
 **Module:** `research/data/meps_functional.py`
 **Coverage:** ~28,000 records nationally (state identifiers suppressed — national analysis only)
 **Key variables:** RACETHX (race/ethnicity), MCDEV22 (Medicaid), AGELAST (age),

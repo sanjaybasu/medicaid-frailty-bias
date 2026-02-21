@@ -15,12 +15,14 @@ Role in study:
     (MEPS measures functional status independently of claims utilization).
 
 Source: AHRQ Medical Expenditure Panel Survey, 2022
-        Full Year Consolidated Data File (h233)
+        Full Year Consolidated Data File (HC-243 / h243)
 Access: Public, no registration required
-Download: https://meps.ahrq.gov/data_files/pufs/h233/h233csv.zip
-Format: CSV (ASCII delimiter format available directly)
+Download: https://meps.ahrq.gov/data_files/pufs/h243/h243ssp.zip
+Format: SAS transport (.ssp), readable via pandas.read_sas(format='xport')
+Note: MEPS uses file number h243 for calendar year 2022 (h233 = 2021).
+      No CSV format is published; SAS transport is the smallest portable format.
 
-Key variables (MEPS 2022 HC-233 codebook):
+Key variables (MEPS 2022 HC-243 codebook):
     RACETHX     — Race/ethnicity (1=Hispanic, 2=White non-H, 3=Black non-H,
                   4=Asian non-H, 5=Other non-H)
     INSCOV22    — Insurance coverage (1=Any private, 2=Public only, 3=Uninsured)
@@ -56,8 +58,9 @@ import statsmodels.formula.api as smf
 DATA_DIR = Path(__file__).parent
 CACHE_FILE = DATA_DIR / "meps_2022_medicaid_adults.parquet"
 
-# MEPS 2022 Full Year Consolidated (h233) — CSV format
-MEPS_CSV_URL = "https://meps.ahrq.gov/data_files/pufs/h233/h233csv.zip"
+# MEPS 2022 Full Year Consolidated (HC-243 / h243) — SAS transport format
+# h243 = calendar year 2022; h233 = 2021 (different from file sequence number)
+MEPS_SSP_URL = "https://meps.ahrq.gov/data_files/pufs/h243/h243ssp.zip"
 
 # MEPS race/ethnicity recode
 MEPS_RACE_MAP = {
@@ -70,12 +73,12 @@ MEPS_RACE_MAP = {
 
 
 def _download_meps() -> pd.DataFrame:
-    """Download MEPS h233 CSV file and return as DataFrame."""
-    print(f"Downloading MEPS 2022 (h233) from AHRQ...")
-    print(f"  URL: {MEPS_CSV_URL}")
-    print(f"  (Compressed file ~10MB)\n")
+    """Download MEPS 2022 (h243) SAS transport file and return as DataFrame."""
+    print(f"Downloading MEPS 2022 (h243) from AHRQ...")
+    print(f"  URL: {MEPS_SSP_URL}")
+    print(f"  (SAS transport file ~7MB)\n")
 
-    resp = requests.get(MEPS_CSV_URL, stream=True, timeout=180)
+    resp = requests.get(MEPS_SSP_URL, stream=True, timeout=180)
     resp.raise_for_status()
 
     chunks = []
@@ -89,16 +92,19 @@ def _download_meps() -> pd.DataFrame:
     raw = b''.join(chunks)
     zf = zipfile.ZipFile(io.BytesIO(raw))
 
-    csv_files = [n for n in zf.namelist() if n.upper().endswith('.CSV')]
-    if not csv_files:
-        raise RuntimeError(f"No CSV in MEPS zip. Contents: {zf.namelist()}")
+    # SAS transport files have .ssp extension inside the zip
+    ssp_files = [n for n in zf.namelist() if n.lower().endswith('.ssp')]
+    if not ssp_files:
+        # Fall back to any file
+        ssp_files = zf.namelist()
 
-    fname = csv_files[0]
-    print(f"  Reading {fname}...")
+    fname = ssp_files[0]
+    print(f"  Reading {fname} via SAS transport reader...")
 
     with zf.open(fname) as f:
-        df = pd.read_csv(f, low_memory=False)
+        raw_bytes = f.read()
 
+    df = pd.read_sas(io.BytesIO(raw_bytes), format='xport', encoding='utf-8')
     df.columns = df.columns.str.upper()
     print(f"  → {len(df):,} MEPS 2022 records, {len(df.columns)} variables")
     return df
