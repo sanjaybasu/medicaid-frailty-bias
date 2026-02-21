@@ -386,7 +386,7 @@ def run_full_fairness_evaluation(
         'mean_tpr_gap': round(tpr_fpr_df['tpr_gap'].mean(), 4),
         'mean_fpr_gap': round(tpr_fpr_df['fpr_gap'].mean(), 4),
         'pct_states_violating': round(tpr_fpr_df['equalized_odds_violation'].mean() * 100, 1),
-        'worst_states': tpr_fpr_df.nlargest(3, 'tpr_gap')[
+        'worst_states': tpr_fpr_df.sort_values('tpr_gap', ascending=False).head(3)[
             ['state', 'tpr_gap', 'fpr_gap']
         ].to_dict(orient='records'),
         'state_detail': tpr_fpr_df.to_dict(orient='records'),

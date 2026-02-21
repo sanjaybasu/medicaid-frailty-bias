@@ -178,13 +178,74 @@ All datasets used in this research pipeline, with direct download URLs and acces
 
 ---
 
+## 13. ACS PUMS 2022 — Individual-Level Disability by State × Race (PRIMARY need-side)
+
+**Role:** PRIMARY individual-level need-side analysis. Replaces ecological BRFSS aggregates.
+**Source:** U.S. Census Bureau, American Community Survey 1-Year PUMS, 2022
+**Access:** Public, no registration required
+**Download:** https://www2.census.gov/programs-surveys/acs/data/pums/2022/1-Year/csv_pus.zip
+**Format:** CSV (~200MB compressed, ~1GB uncompressed)
+**Module:** `research/data/acs_pums.py`
+**Coverage:** ~3.3M individual records, 50 states + DC
+**Key variables:** AGEP (age), ST (state FIPS), RAC1P (race), HISP (ethnicity), HINS3 (Medicaid),
+DIS (disability recode), DPHY/DREM/DDRS/DOUT/DEAR/DEYE (disability domains), POVPIP (income), PWGTP (weight)
+**Target population:** Medicaid-enrolled adults 19–64
+**Analysis:** Individual-level logistic regression P(disability | race, state_FE, age, income)
+Tests Black–White disability gap conditional on covariates — directly addresses ecological fallacy.
+
+---
+
+## 14. BRFSS 2022 Individual Microdata — Secondary Need-Side Analysis
+
+**Role:** SECONDARY individual-level need-side analysis. Independent replication of ACS estimates.
+**Source:** CDC Behavioral Risk Factor Surveillance System, 2022
+**Access:** Public, no registration required
+**Download:** https://www.cdc.gov/brfss/annual_data/2022/files/LLCP2022XPT.zip
+**Format:** SAS XPT transport format (~60MB compressed)
+**Module:** `research/data/brfss_microdata.py`
+**Coverage:** ~400K records, all 50 states + DC
+**Key variables:** _STATE, _RACE, PRIMINS1 (Medicaid=4), DIFFWALK/DIFFDRES/DIFFALON/DECIDE/BLIND/DEAF
+(functional limitation indicators), _LLCPWT (survey weight), INCOME3, EDUCA
+**Target population:** Medicaid-enrolled adults 19–64 (PRIMINS1==4, _AGE65YR==1)
+**Analysis:** Replicate ACS logistic regression; test convergence of two independent surveys.
+**Continuity note:** Same data source as existing ecological BRFSS estimates — upgrade to
+individual-level directly addresses Reviewer 3 ecological fallacy concern without changing
+the conceptual measurement approach.
+
+---
+
+## 15. MEPS 2022 Full Year Consolidated (h233) — Tertiary Sensitivity Analysis
+
+**Role:** TERTIARY national-level sensitivity analysis. Addresses socioeconomic confounding
+concern (Reviewer 3: income and health literacy as confounders of racial disability gap).
+**Source:** AHRQ Medical Expenditure Panel Survey, 2022 Full Year Consolidated File (h233)
+**Access:** Public, no registration required
+**Download:** https://meps.ahrq.gov/data_files/pufs/h243/h243dta.zip
+**Format:** Stata .dta (~5.5MB compressed) — h243 = calendar year 2022
+**Note:** .ssp is SAS CPORT format (not XPORT); pandas cannot read it — use Stata format
+**Module:** `research/data/meps_functional.py`
+**Coverage:** ~28,000 records nationally (state identifiers suppressed — national analysis only)
+**Key variables:** RACETHX (race/ethnicity), MCDEV22 (Medicaid), AGELAST (age),
+ADHDIFFN (ADL count), ACTLIM53/WLKLIM53/IADLHP53 (functional limitations),
+POVCAT22 (poverty category), EDUCYR (years of education), PERWT22F (weight)
+**Target population:** Medicaid-enrolled adults 19–64 nationally
+**Analysis:** Income- and education-adjusted OLS: functional_limitation ~ Black + income + education
+If Black coefficient persists after income/education adjustment → disparity is not explained
+by socioeconomic confounding; supports intrinsic health burden differential.
+**Limitation:** National only; cannot support state-level or DiD analyses.
+
+---
+
 ## Data Access for Full Replication
 
 | Component | Data Needed | Access Path |
 |-----------|-------------|------------|
 | T1019 provider intensity | HHS spending dataset | `opendata.hhs.gov` (public) |
 | State demographics | KFF race/ethnicity | `kff.org` (public) |
-| Disability burden | CDC BRFSS/DHDS | `cdc.gov` (public) |
-| Individual-level analysis | T-MSIS TAF | ResDAC DUA (restricted) |
-| Functional status | MDS 3.0 | CMS DUA (restricted) |
+| Need-side PRIMARY | ACS PUMS 2022 individual | `census.gov` (public, no DUA) |
+| Need-side SECONDARY | BRFSS 2022 microdata | `cdc.gov` (public, no DUA) |
+| Need-side TERTIARY | MEPS 2022 h233 | `ahrq.gov` (public, no DUA) |
+| Need-side FALLBACK | CDC BRFSS/DHDS ecological | `cdc.gov` (public, hardcoded) |
+| Individual exemption decisions | T-MSIS TAF | ResDAC DUA (restricted) |
+| Functional status (gold std) | MDS 3.0 | CMS DUA (restricted) |
 | Frailty definitions | Waiver documents | `medicaid.gov` (public) |

@@ -1,0 +1,7 @@
+Variable,coef,se,p_value,ci_lower,ci_upper
+Policy Stringency Score (0–10),-0.6383,0.3111,0.0704,-1.342,0.0653
+Physician Certification Required (1=Yes),-0.5617,0.8742,0.5365,-2.5393,1.4159
+Full Ex Parte Determination (1=Yes),-0.5021,0.8386,0.5641,-2.3992,1.395
+HIE Integration (1=Yes),0.6022,1.1176,0.603,-1.9259,3.1304
+Claims-Based Frailty Index (1=Yes),0.7766,1.3443,0.5776,-2.2644,3.8177
+Long Claims Lag (1=Yes),-1.6559,0.8971,0.098,-3.6853,0.3734
