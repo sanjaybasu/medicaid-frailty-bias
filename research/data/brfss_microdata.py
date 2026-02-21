@@ -109,15 +109,18 @@ def _download_brfss() -> pd.DataFrame:
     raw = b''.join(chunks)
     zf = zipfile.ZipFile(io.BytesIO(raw))
 
-    xpt_files = [n for n in zf.namelist() if n.upper().endswith('.XPT')]
+    # Strip whitespace from filenames — CDC zips sometimes include trailing spaces
+    xpt_files = [n for n in zf.namelist() if n.strip().upper().endswith('.XPT')]
     if not xpt_files:
         raise RuntimeError(f"No XPT file found in BRFSS zip. Contents: {zf.namelist()}")
 
     xpt_name = xpt_files[0]
-    print(f"  Reading {xpt_name}...")
+    print(f"  Reading {xpt_name.strip()}...")
 
+    # Read into memory first to avoid issues with spaces in zip member names
     with zf.open(xpt_name) as f:
-        df = pd.read_sas(f, format='xport', encoding='utf-8')
+        raw_bytes = f.read()
+    df = pd.read_sas(io.BytesIO(raw_bytes), format='xport', encoding='utf-8')
 
     print(f"  → {len(df):,} BRFSS 2022 records loaded")
     return df
