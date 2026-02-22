@@ -1,13 +1,5 @@
 # Racial Disparities in Medicaid Medically Frail Exemption Rates
 
-Replication code and data pipeline for:
-
-> Basu S, Batniji R. Racial disparities in medically frail exemption rates under
-> Medicaid community engagement requirements: a multi-state analysis. 2026.
-
-See `manuscript.md` for the full manuscript and `output/appendix.md` for the
-supplementary methods.
-
 ---
 
 ## Requirements
