@@ -126,13 +126,4 @@ python causal_inference/synthetic_control.py      # Synthetic control (AR, GA, M
   your environment to increase API rate limits.
 - All stochastic operations use fixed seed 42; figures and JSON results are
   exactly reproducible given identical input data.
-
----
-
-## Citation
-
-```
-Basu S, Batniji R. Racial disparities in medically frail exemption rates under
-Medicaid community engagement requirements: a multi-state analysis. 2026.
-Code: https://github.com/sanjaybasu/medicaid-frailty-bias
 ```
