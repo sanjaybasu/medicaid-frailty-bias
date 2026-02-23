@@ -2,7 +2,7 @@
 
 **Supplementary Methods, Tables, and Figures**
 
-*Corresponds to: Basu S, Batniji R. Racial disparities in medically frail exemption rates under Medicaid community engagement requirements: a multi-state analysis. 2026.*
+*Corresponds to: Basu S, Berkowitz SA. Racial disparities in medically frail exemption rates under Medicaid community engagement requirements: a multi-state analysis. 2026.*
 
 *All code to reproduce these analyses is available at: https://github.com/sanjaybasu/medicaid-frailty-bias (branch: `claude/medicaid-frailty-bias-Pmu4e`)*
 
@@ -12,9 +12,10 @@
 
 - [Appendix Methods A: Data Construction](#appendix-methods-a)
 - [Appendix Methods B: Statistical Analysis Detail](#appendix-methods-b)
-- [Appendix Methods C: Peer Review and Response](#appendix-methods-c)
-- [Table A1: OLS Regression (from main text; moved to Appendix)](#table-a1)
-- [Table S1: Full 17-State Policy Database](#table-s1)
+- [Table A1: Full 17-State Policy Database](#table-a1)
+- [Table A2: State-Level Excess Black Coverage Losses](#table-a2)
+- [Table A3: OLS Regression (Exploratory; Underpowered)](#table-a3)
+- [Table S1: BRFSS Disability Prevalence by State and Race (CDC DHDS 2022)](#table-s1)
 - [Table S2: Equalized Odds by State](#table-s2)
 - [Table S3: Synthetic Control Weights and Pre-Treatment Fit](#table-s3)
 - [Table S4: ATT(g,t) Full Results](#table-s4)
@@ -115,6 +116,12 @@ Approximate uncertainty for pre-specified estimates: ±2–4 pp for the racial g
 
 ### B.1 Ecological Algorithmic Audit (Obermeyer Methodology, State-Level Adaptation)
 
+**Test statistic.** Let $\mu_{B,k}$ and $\mu_{W,k}$ denote mean BRFSS any-disability prevalence for Black and White Medicaid expansion adults in octile bin $k$ ($k = 1, \ldots, K$; $K = 8$). The within-bin disability gap is $d_k = \mu_{B,k} - \mu_{W,k}$. The mean gap and its one-sample t-statistic are:
+
+$$\bar{d} = \frac{1}{K}\sum_{k=1}^{K} d_k, \qquad t = \frac{\bar{d}}{\widehat{\text{SE}}(\bar{d})} = \frac{\bar{d}}{s_d / \sqrt{K}}$$
+
+where $s_d$ is the sample standard deviation of $\{d_k\}_{k=1}^{K}$ and degrees of freedom $= K - 1 = 7$. Under $H_0 : \bar{d} = 0$, a calibrated system would produce equal disability burden across racial groups at equivalent exemption rate levels. The observed values are $\bar{d} = 6.59$ pp, $\widehat{\text{SE}} = 0.257$, $t = 25.63$, $p < 0.001$.
+
 **Original Obermeyer et al. (2019) approach:** For individual patients, ranked by commercial risk algorithm score, compared mean number of chronic conditions (true need) for Black and white patients within each score decile.
 
 **Our state-level adaptation:** States were ranked by overall medically frail exemption rate (the policy-level analog of algorithm stringency). States were divided into octile bins (n=2 states per octile, given 16 states). Within each bin, mean BRFSS any-disability prevalence was compared between Black and white Medicaid expansion adults.
@@ -129,19 +136,32 @@ Octile bin results:
 
 | Octile | States | Mean Overall Exempt Rate (%) | Mean Black Disability (%) | Mean White Disability (%) | Gap (pp) |
 |---|---|---|---|---|---|
-| 1 (lowest) | FL, AZ | 8.5 | 36.7 | 30.5 | 6.1 |
-| 2 | TN, TX | 9.6 | 35.8 | 30.7 | 5.1 |
-| 3 | AR, LA | 11.0 | 36.4 | 29.8 | 6.6 |
-| 4 | GA, OK | 13.1 | 36.7 | 29.6 | 7.1 |
-| 5 | KY, OH | 15.0 | 38.5 | 31.7 | 6.8 |
-| 6 | IN, MI | 16.5 | 35.6 | 29.0 | 6.6 |
-| 7 | NC, WI | 17.9 | 36.0 | 28.1 | 7.9 |
-| 8 (highest) | NY, CA | 25.5 | 30.8 | 24.2 | 6.5 |
-| **Mean** | | | | | **6.59 (SE=0.28)** |
+| 1 (lowest) | FL, AR | 8.3 | 36.65 | 30.50 | 6.15 |
+| 2 | TN, AZ | 9.4 | 35.85 | 30.75 | 5.10 |
+| 3 | TX, OK | 10.8 | 36.40 | 29.75 | 6.65 |
+| 4 | GA, LA | 12.9 | 36.70 | 29.65 | 7.05 |
+| 5 | KY, OH | 14.3 | 38.50 | 31.75 | 6.75 |
+| 6 | NC, MI | 16.2 | 35.45 | 28.50 | 6.95 |
+| 7 | WI, IN | 20.2 | 36.15 | 28.60 | 7.55 |
+| 8 (highest) | NY, CA | 25.1 | 30.75 | 24.20 | 6.55 |
+| **Mean** | | | | | **6.59 (SE=0.257)** |
 
-t-test (H₀: mean gap = 0): t=23.94, df=7, p<0.001.
+t-test (H₀: mean gap = 0): t=25.63, df=7, p<0.001. State assignments verified against pipeline output (decile_summary field in `output/pipeline_results.json`): octile membership determined by ascending mean overall (Black+White average) exemption rate. The previous version of this table contained incorrect state assignments (FL/AZ, TN/TX, AR/LA, GA/OK, IN/MI, NC/WI); corrected assignments are FL/AR, TN/AZ, TX/OK, GA/LA, NC/MI, WI/IN.
 
 ### B.2 Equalized Odds Computation
+
+**Formal definition.** The equalized odds criterion (Hardt, Price, and Srebro 2016) requires a predictor $\hat{Y}$ to satisfy:
+
+$$P(\hat{Y} = 1 \mid Y = 1, R = r) \text{ is equal across groups } r \in \{B, W\}$$
+$$P(\hat{Y} = 1 \mid Y = 0, R = r) \text{ is equal across groups } r \in \{B, W\}$$
+
+where $\hat{Y} = 1$ denotes frailty exemption granted, $Y = 1$ denotes true disability status above the prevalence threshold, and $R$ denotes race. These conditions correspond to equal true positive rates (TPR) and equal false positive rates (FPR), respectively. The TPR gap is $\Delta_{\text{TPR}} = \text{TPR}_W - \text{TPR}_B$; a positive value indicates that frail White enrollees have a higher probability of correct exemption than frail Black enrollees with equivalent disability burden.
+
+**Chouldechova impossibility.** When base rates differ across groups—that is, $P(Y = 1 \mid R = B) \neq P(Y = 1 \mid R = W)$—simultaneous satisfaction of calibration (equal positive predictive value by race) and equalized odds is mathematically impossible unless prediction is perfect. Formally, if the positive predictive value (PPV) is equal by race:
+
+$$\text{PPV}_r = \frac{\pi_r \cdot \text{TPR}_r}{\pi_r \cdot \text{TPR}_r + (1-\pi_r) \cdot \text{FPR}_r}$$
+
+where $\pi_r = P(Y=1 \mid R=r)$, then $\text{PPV}_B = \text{PPV}_W$ combined with $\pi_B \neq \pi_W$ implies $\text{TPR}_B \neq \text{TPR}_W$ or $\text{FPR}_B \neq \text{FPR}_W$ (or both). Because $\pi_B > \pi_W$ in all 16 states (mean gap 6.7 pp), the equalized odds and calibration criteria are simultaneously unachievable; equalized odds (TPR parity) is prioritized as the normatively appropriate criterion for an eligibility protection mechanism.
 
 For each state, we constructed a 2×2 contingency table of disability status (BRFSS disability ≥ threshold / below threshold) by exemption status, separately for Black and white enrollees.
 
@@ -152,6 +172,22 @@ For each state, we constructed a 2×2 contingency table of disability status (BR
 **Fairness impossibility (Chouldechova 2017):** When base rates differ between racial groups (as observed here: Black disability prevalence exceeds white disability prevalence in all 16 states), simultaneous achievement of calibration and equalized odds is mathematically impossible without error. We prioritize equalized odds (equal TPR) as the normatively appropriate criterion for an eligibility protection, because it ensures that genuinely frail individuals have equal access to exemption regardless of race. Calibration (equal positive predictive value by race) is also reported for completeness.
 
 ### B.3 Staggered DiD: Parallel Trends Assessment
+
+**Estimator.** The Callaway–Sant'Anna (2021) group-time average treatment effect is:
+
+$$\text{ATT}(g, t) = E\!\left[Y_t(g) - Y_t(\infty) \mid G_g = 1\right]$$
+
+where $Y_t(g)$ is the potential outcome at calendar year $t$ for a unit first treated in year $g$, $Y_t(\infty)$ is the counterfactual potential outcome under no treatment, and $G_g = 1$ indicates membership in treatment cohort $g$. The comparison group for each ATT$(g, t)$ consists of states not yet treated as of period $t$ (not-yet-treated comparison). The aggregate ATT is a weighted average over all cohorts and post-treatment periods:
+
+$$\text{ATT} = \sum_{g \in \mathcal{G}} \sum_{t \geq g} w(g, t) \cdot \text{ATT}(g, t), \qquad w(g, t) = \frac{P(G_g = 1)}{\sum_{g' \in \mathcal{G}} \sum_{t' \geq g'} P(G_{g'} = 1)}$$
+
+Standard errors are obtained by multiplying-bootstrap with $B = 999$ replications.
+
+**Parallel trends assumption.** The identifying assumption is:
+
+$$E\!\left[Y_t(\infty) - Y_{g-1}(\infty) \mid G_g = 1\right] = E\!\left[Y_t(\infty) - Y_{g-1}(\infty) \mid C\right]$$
+
+for all $t \geq g$, where $C$ denotes the not-yet-treated comparison group. Under this assumption, the counterfactual trend for treated states equals the observed trend for not-yet-treated states.
 
 The Callaway–Sant'Anna estimator uses not-yet-treated units as comparison observations, which is valid under the conditional parallel trends assumption: conditional on covariates, the average untreated potential outcomes would have evolved in parallel across groups.
 
@@ -189,130 +225,77 @@ The excess Black coverage loss projection uses:
 
 ---
 
-## Appendix Methods C: Peer Review Response {#appendix-methods-c}
+## Table A1: Full 17-State Frailty Policy Database {#table-a1}
 
-This manuscript was internally reviewed from the perspectives of four expert domains prior to submission. The following documents how the major critiques were addressed in revision. All four simulated reviews recommended major revision; the key cross-reviewer consensus issues and our responses are summarized.
+*Primary sources for each state's frailty policy coding. All sources accessed January–February 2026. WR=community engagement requirement. CFI=claims-based frailty index.*
 
----
-
-### Reviewer 1 (Health Policy Perspective)
-
-**Critique 1.1 [MAJOR]: OBBBA framing is speculative; the act postdates antecedent state programs.**
-
-**Response:** We have reframed the Introduction to explicitly note that OBBBA establishes mandatory community engagement requirements, while the data examined here derive from antecedent Section 1115 waiver programs. The manuscript now states that findings "have direct relevance to the federal regulatory standards that CMS will apply when reviewing state implementation plans submitted under OBBBA." We do not claim to analyze OBBBA programs directly.
-
-**Critique 1.2 [MAJOR]: Policy "so what" needs development—specifically CMS regulatory authority.**
-
-**Response:** The Policy Implications section has been expanded to specify the regulatory tools available to CMS: standard terms and conditions (STCs) in section 1115 waiver approval letters, 42 C.F.R. § 430.25 authority, and OBBBA rulemaking. We also acknowledge feasibility constraints and competing policy arguments about work's health benefits.
-
-**Critique 1.3 [MAJOR]: Abstract conflates proxy validity, implementation fidelity, and claims architecture.**
-
-**Response:** We have rewritten the abstract and Introduction to distinguish (i) policy scope and frailty definition breadth, (ii) claims-based determination architecture, and (iii) implementation fidelity. The Introduction now explicitly defines rule-based eligibility systems versus claims-based frailty indices and notes these produce bias through distinct mechanisms.
-
-**Critique 1.4 [MINOR]: Table 3 policy regression should be moved to Appendix.**
-
-**Response:** Table 3 has been moved to Appendix Table A1 with stronger methodological caveats. The main text replaces it with a qualitative comparison among observed-data states (n=4).
-
-**Critique 1.5 [MINOR]: Abstract was too long.**
-
-**Response:** Revised abstract is approximately 190 words, down from approximately 250 words.
+| State | WR Status | Primary Sources | Frailty Basis | Stringency Score |
+|---|---|---|---|---|
+| AR | Terminated | CMS SPA AR-18-001; Sommers et al. 2019 NEJM | Rule-based (ICD-10) | 3.8 |
+| AZ | Pending | CMS 1115 Waiver #11-W-00014/9; AZ AHCCCS | Rule-based (ICD-10) | 2.8 |
+| CA | None | Medi-Cal ABP SPAs; CalAIM documentation | Claims-based CFI (DxCG) | 8.9 |
+| FL | Pending | Proposed SPA FL-24-XXX; FL Agency for Health Care Administration | Rule-based (ICD-10) | 2.4 |
+| GA | Active | GA DHS Pathways 1115 waiver; Annual Evaluation Report 2024 | Rule-based (ICD-10) | 4.2 |
+| IN | Active | CMS 1115 Waiver HIP 2.0; IHIPP evaluation report 2022 | Claims-based CFI | 5.8 |
+| KY | Blocked | Kentucky HEALTH SPA; blocked by court order | Rule-based (ICD-10) | 5.0 |
+| LA | Pending | LA DHH 1115 waiver amendment | Rule-based (ICD-10) | 4.8 |
+| MI | Blocked | Healthy Michigan Plan CFI pilot documentation; MDCH | Claims-based CFI | 5.9 |
+| MT | Active | MT SB 405; DPHHS Medicaid T1019 ex parte protocol | Rule-based (T1019) | est. 6.8 |
+| NC | Active | NC Medicaid 1115 waiver #11-W-00166/4; 2023 implementation | Rule-based (ICD-10) | 6.0 |
+| NY | None | NY OMH Community First Choice; MLTC expansion | Claims-based CFI (RAMS) | 8.4 |
+| OH | Pending | OH Medicaid 1115 waiver amendment | Rule-based (ICD-10) | 5.3 |
+| OK | Pending | OK SoonerCare 1115 waiver; expanded 2021 | Rule-based (ICD-10) | 4.1 |
+| TN | Pending | TennCare 1115 #11-W-00151/4 | Rule-based (ICD-10) | 3.2 |
+| TX | Pending | TX STAR+PLUS; proposed 1115 amendment | Rule-based (ICD-10) | 3.5 |
+| WI | Blocked | BadgerCare Plus 1115; blocked by court | Rule-based + CFI | 6.4 |
 
 ---
 
-### Reviewer 2 (Medicaid Policy Expert)
+## Table A2: State-Level Estimated Excess Black Coverage Losses {#table-a2}
 
-**Critique 2.1 [MAJOR]: Modeled exemption rates are pre-specified researcher estimates, not empirically derived—must be clearly labeled.**
+*Excess losses = (Black-White exemption gap, pp / 100) × Black Medicaid expansion population denominator. Excludes Montana (missing race data), Arkansas (terminated), California and New York (no requirement). Uncertainty reflects ±1 SE in the racial gap estimate (SE = 0.273 pp applied proportionally) and does not capture structural assumption uncertainty (see Appendix Methods B.5).*
 
-**Response:** All pre-specified estimates are now labeled ^M in tables with the corrected footnote: "Pre-specified researcher estimate using published KFF/MACPAC overall exemption rates, BRFSS disability prevalence ratios, and policy analogy to observed states; set prior to regression analysis." The original footnote ("Modeled from OLS regression framework") has been corrected. Appendix A.4 explains construction and limitations.
-
-**Critique 2.2 [MAJOR]: Program statuses may not be current as of February 2026 submission.**
-
-**Response:** Limitation 10 explicitly notes: "Program status information reflects administrative data available as of early 2024; states' program statuses may have changed by this manuscript's submission date (February 2026). Readers should verify current program status before citing state-specific findings."
-
-**Critique 2.3 [MAJOR]: OBBBA does not predefine frailty criteria—CMS guidance and individual waivers do.**
-
-**Response:** Introduction revised to state: "Under CMS guidance and individual waiver terms, states may use administrative data systems..." The previous text implied the statute predefined criteria, which was inaccurate.
-
-**Critique 2.4 [MAJOR]: Distinction between rule-based vs. algorithmic frailty criteria.**
-
-**Response:** A new paragraph in the Introduction distinguishes rule-based criteria (most states) from true claims-based frailty indices (CFIs), noting these produce bias through different mechanisms. Table 2 retains CFI coding and Appendix A.3 sources are listed per state.
-
-**Critique 2.5 [MAJOR]: Underpowered policy regression damages credibility.**
-
-**Response:** Table 3 removed from main text; moved to Appendix Table A1. Main results replaced with qualitative comparison.
-
----
-
-### Reviewer 3 (Health Equity Researcher)
-
-**Critique 3.1 [MAJOR]: Ecological fallacy—state-level associations cannot support individual-level mechanism claims.**
-
-**Response:** The Introduction, Methods, and Conclusions now each include explicit ecological inference gap statements. Methods: "This analysis operates exclusively at the state level (ecological design). Findings describe state-population associations and must not be used to draw individual-level inferences." Conclusions: "Individual-level data, which would require T-MSIS records linked to exemption determinations, are necessary to definitively establish the mechanism and magnitude of racial underdetermination." The mechanism language throughout has been changed from "reflects a common mechanism" to "is consistent with a hypothesis."
-
-**Critique 3.2 [MAJOR]: BRFSS any-disability is a poor comparator for clinical frailty criteria.**
-
-**Response:** The BRFSS Data Sources section now notes the conceptual misalignment with clinical frailty definitions. The Methods section for the ecological audit explicitly states this is a state-level ecological test that cannot establish individual-level calibration bias. Limitation 3 has been expanded to acknowledge both the definitional mismatch and potential differential self-reporting by race.
-
-**Critique 3.3 [MAJOR]: Confounding by income, health literacy, care fragmentation is uncontrolled.**
-
-**Response:** Limitation 4 now explicitly enumerates these alternative explanations: "State-level racial gaps may reflect multiple mechanisms including claims data architecture, healthcare access barriers, documentation capacity, health literacy, and income inequality. This analysis does not disentangle these; causal attribution to claims-based determination is provisional." The Principal Findings and geographic discussion paragraphs also acknowledge confounding.
-
-**Critique 3.4 [MAJOR]: Most states do not use true algorithms—"algorithmic bias" framing is inappropriate.**
-
-**Response:** The Introduction now clarifies that most states use rule-based eligibility criteria rather than algorithmic models, and that these produce bias through different mechanisms (scope, documentation barriers, bureaucratic burden) than ML-based statistical discrimination. We use "claims-based administrative determination" as the primary descriptor and restrict "algorithmic" to the subset of states using validated CFIs.
-
-**Critique 3.5 [MAJOR]: Obermeyer audit is misapplied at the ecological level.**
-
-**Response:** Methods now explicitly reframes the ecological audit as a state-level analog of the Obermeyer test, not a replication: "This is a state-level ecological analog of the individual-level Obermeyer calibration test...Individual-level calibration cannot be assessed from state-level data." Results text similarly frames the finding as "consistent with, but does not replicate" the individual-level result.
+| State | Black Expansion Pop. | B–W Gap (pp) | Estimated Excess Losses | Approximate Range |
+|---|---|---|---|---|
+| Georgia | 634,000 | 6.2 | 39,318 | 37,587–41,049 |
+| Florida | 711,000 | 4.5 | 31,992 | 30,553–33,430 |
+| Louisiana | 464,000 | 6.6 | 30,634 | 29,235–32,033 |
+| Ohio | 453,000 | 5.5 | 24,940 | 23,762–26,117 |
+| North Carolina | 475,000 | 4.3 | 20,428 | 19,430–21,425 |
+| Michigan | 382,000 | 5.2 | 19,848 | 18,899–20,797 |
+| Texas | 406,000 | 4.8 | 19,483 | 18,555–20,411 |
+| Tennessee | 244,000 | 4.5 | 10,965 | 10,445–11,484 |
+| Indiana | 152,000 | 6.3 | 9,547 | 9,099–9,996 |
+| Wisconsin | 120,000 | 5.5 | 6,606 | 6,285–6,928 |
+| Kentucky | 108,000 | 5.4 | 5,846 | 5,566–6,125 |
+| Arizona | 70,000 | 4.5 | 3,158 | 3,007–3,308 |
+| Oklahoma | 61,000 | 4.3 | 2,610 | 2,484–2,736 |
+| **Total** | | | **225,349** | **214,907–235,839** |
 
 ---
 
-### Reviewer 4 (Econometrics and Causal Inference)
+## Table A3: OLS Regression — Policy Predictors of Racial Gap (Exploratory; Severely Underpowered) {#table-a3}
 
-**Critique 4.1 [MAJOR]: Parallel trends for g=2018 cohort is inadequately verified with only 2 pre-periods.**
-
-**Response:** Methods now explicitly notes: "The g=2018 treatment cohort (Arkansas, Indiana) has only two pre-treatment periods (2016–2017); the parallel trends assumption is consequently less verifiable for this cohort than for the g=2023 cohort (Georgia, North Carolina; seven pre-treatment periods)." The Appendix B.3 sensitivity analysis has been expanded with a note that the Rambachan–Roth bounds impose relatively little constraint for the 2018 cohort. Cohort-specific ATT estimates (Table 4) allow readers to weight the more-credible 2023 cohort results.
-
-**Critique 4.2 [MAJOR]: Arkansas SCM is a two-state comparison and should not be co-equal causal evidence.**
-
-**Response:** Synthetic controls are now labeled "supplementary case studies" in Methods, with explicit framing that the aggregate DiD ATT provides the primary causal estimate. Results text for Arkansas clearly states the finding "should not be interpreted as a causal estimate." The abstract does not cite the Arkansas SCM effect.
-
-**Critique 4.3 [MAJOR]: Policy regression (Table 3) with n=16 and 6 predictors should be removed.**
-
-**Response:** Table 3 moved to Appendix Table A1 and removed from main results. See Reviewer 1.4 response.
-
-**Critique 4.4 [MAJOR]: DiD outcome mixes observed and modeled values without disclosure.**
-
-**Response:** Methods explicitly notes the outcome is observed for only 4 states (all treated); the comparison states use pre-specified estimates. Appendix B.3 now includes the observed-only sensitivity analysis discussion, noting that all 4 observed-outcome states are treated states, making a purely observed-outcome DiD infeasible. Qualitative corroboration from the observed state trajectories is presented.
-
-**Critique 4.5 [MAJOR]: No covariate adjustment or unmeasured confounding sensitivity analysis in DiD.**
-
-**Response:** The DiD methods note that conditioning on covariates in the Callaway–Sant'Anna framework would further reduce degrees of freedom in this sample. The Rambachan–Roth sensitivity analysis provides partial protection against smooth linear pre-trends. Limitation 6 explicitly notes the unmeasured confounding assumption. Appendix B.3 has been expanded with an unmeasured confounding discussion.
-
----
-
-## Table A1: OLS Regression — Policy Predictors of Racial Gap (Exploratory; Moved from Main Text) {#table-a1}
-
-**⚠ METHODOLOGICAL WARNING:** This regression (n=16 states, 6 predictors) is severely underpowered. With degrees of freedom ≈ 10 and 6 predictors, individual coefficient estimates are unreliable and should not be cited for causal inference. Adjusted R²=0.225 (vs. R²=0.535) indicates substantial overfitting. The outcome (racial gap) is pre-specified researcher estimates for 12 of 16 states, which may introduce internal consistency with predictors by construction. This table is retained for transparency only. The main text presents qualitative patterns from the four observed-data states.
+**⚠ METHODOLOGICAL WARNING:** This regression (n=16 states, 6 predictors) is severely underpowered (adjusted R²=0.139 in Model 1 vs. R²=0.484). With degrees of freedom ≈ 9 and 6 predictors, individual coefficient estimates are unreliable and must not be cited for causal inference. The outcome (racial gap) is pre-specified researcher estimates for 12 of 16 states, potentially introducing internal consistency with predictors by construction. Retained for transparency only.
 
 *Outcome: White − Black exemption rate (percentage points). HC3 robust standard errors. Montana excluded (missing outcome).*
 
 | Variable | Model 1 β (95% CI) | p | Model 2 β (95% CI) | p |
 |---|---|---|---|---|
-| **Intercept** | 8.16 (4.99, 11.33) | <0.001 | 5.40 (−0.24, 11.04) | 0.058 |
-| Policy Stringency Score (0–10) | −0.51 (−1.14, 0.12) | 0.099 | −0.45 (−1.12, 0.22) | 0.158 |
-| Physician Certification (1=Yes) | −0.59 (−2.36, 1.18) | 0.471 | −0.33 (−2.44, 1.77) | 0.720 |
-| Full Ex Parte Determination (1=Yes) | −0.66 (−2.36, 1.04) | 0.402 | −0.38 (−2.32, 1.55) | 0.654 |
-| HIE Integration (1=Yes) | 0.17 (−2.10, 2.43) | 0.872 | 0.05 (−2.35, 2.46) | 0.960 |
-| Claims-Based Frailty Index (1=Yes) | 0.72 (−2.00, 3.45) | 0.563 | 0.47 (−2.39, 3.33) | 0.711 |
-| Long Claims Lag ≥6 months (1=Yes) | −1.47 (−3.29, 0.35) | 0.100 | −1.03 (−3.06, 1.01) | 0.271 |
-| Black Enrollee Share (%) | — | — | 0.02 (−0.05, 0.08) | 0.564 |
-| Disability Gap, Black − White (pp) | — | — | 0.27 (−0.47, 1.00) | 0.418 |
+| **Intercept** | 8.69 (5.16, 12.23) | <0.001 | 7.39 (2.18, 12.60) | 0.012 |
+| Policy Stringency Score (0–10) | −0.64 (−1.34, 0.07) | 0.070 | −0.53 (−1.36, 0.30) | 0.177 |
+| Physician Certification (1=Yes) | −0.56 (−2.54, 1.42) | 0.537 | −0.33 (−2.95, 2.28) | 0.771 |
+| Full Ex Parte Determination (1=Yes) | −0.50 (−2.40, 1.40) | 0.564 | −0.20 (−2.50, 2.10) | 0.843 |
+| HIE Integration (1=Yes) | 0.60 (−1.93, 3.13) | 0.603 | 0.41 (−2.70, 3.51) | 0.766 |
+| Claims-Based Frailty Index (1=Yes) | 0.78 (−2.26, 3.82) | 0.578 | 0.41 (−3.25, 4.07) | 0.800 |
+| Long Claims Lag ≥6 months (1=Yes) | −1.66 (−3.69, 0.37) | 0.098 | −1.23 (−3.81, 1.35) | 0.295 |
+| Black Enrollee Share (%) | — | — | 0.03 (−0.04, 0.10) | 0.369 |
+| Disability Gap, Black − White (pp) | — | — | 0.03 (−0.12, 0.18) | 0.664 |
 | **N** | 16 | | 16 | |
-| **R²** | 0.535 | | 0.645 | |
-| **Adjusted R²** | 0.225 | | 0.240 | |
+| **R²** | 0.484 | | 0.551 | |
+| **Adjusted R²** | 0.139 | | 0.039 | |
 
-*Model 1=policy variables only; Model 2 adds demographic controls. Counterintuitive signs (e.g., negative physician certification coefficient) likely reflect multicollinearity and insufficient power rather than genuine associations. No predictor reaches p<0.05.*
+*Model 1=policy variables only; Model 2 adds demographic controls. No predictor reaches p<0.05. Coefficient signs and magnitudes should not be interpreted causally. Values sourced from `output/pipeline_results.json` (regression.policy_only and regression.with_demographics fields).*
 
 ---
 
@@ -354,7 +337,7 @@ This manuscript was internally reviewed from the perspectives of four expert dom
 | California | 8.9 | 83.4% | 100.0% | 16.6 | 0.0% | 4.1% | 4.1 | Yes |
 | Florida | 2.4 | 17.3% | 37.3% | 20.0 | 0.0% | 0.0% | 0.0 | Yes |
 | Georgia | 4.2 | 25.6% | 54.4% | 28.9 | 0.0% | 0.0% | 0.0 | Yes |
-| Indiana | 5.8 | 35.9% | 61.7% | 25.8 | 0.0% | 0.0% | 0.0 | Yes |
+| Indiana | 5.8 | 54.4% | 87.6% | 33.2 | 0.0% | 0.0% | 0.0 | Yes |
 | Kentucky | 5.0 | 26.9% | 47.5% | 20.6 | 0.0% | 0.0% | 0.0 | Yes |
 | Louisiana | 4.8 | 27.0% | 53.8% | 26.9 | 0.0% | 0.0% | 0.0 | Yes |
 | Michigan | 5.9 | 38.5% | 66.1% | 27.6 | 0.0% | 0.0% | 0.0 | Yes |
@@ -365,7 +348,7 @@ This manuscript was internally reviewed from the perspectives of four expert dom
 | Tennessee | 3.2 | 17.5% | 34.9% | 17.4 | 0.0% | 0.0% | 0.0 | Yes |
 | Texas | 3.5 | 23.0% | 46.0% | 23.0 | 0.0% | 0.0% | 0.0 | Yes |
 | Wisconsin | 6.4 | 40.9% | 73.7% | 32.8 | 0.0% | 0.0% | 0.0 | Yes |
-| **Mean (16 states)** | **5.0** | **31.8%** | **55.2%** | **23.4** | **0.0%** | **0.4%** | **0.4** | **100%** |
+| **Mean (16 states)** | **5.0** | **35.1%** | **58.9%** | **23.84** | **0.0%** | **0.4%** | **0.4** | **100% (16/16)** |
 
 ---
 
@@ -410,11 +393,11 @@ This manuscript was internally reviewed from the perspectives of four expert dom
 
 ---
 
-## Figure S1: Parallel Trends Validation {#figure-s1}
+## Figure S1: Four-Panel Summary of Disparity Patterns {#figure-s1}
 
-*(See `output/figures/event_study_did.png`)*
+*(See `output/figures/figure1_main_findings.png`)*
 
-The event study figure plots ATT(g,t) estimates with 95% CIs for all relative time periods. Pre-treatment ATT estimates (relative time < 0) cluster near zero (mean: −0.023 pp) without systematic trend, consistent with the parallel trends assumption. A sharp increase in ATT is observed at relative time 0 (program adoption), with the aggregate ATT of 1.24 pp driven by the period immediately following adoption.
+The four-panel figure presents: (a) Black vs. White frailty exemption rates by state (scatter plot with identity line); (b) Black-White exemption gap by state, sorted by magnitude; (c) BRFSS disability prevalence by race and state; and (d) the geographic scatter of provider density vs. racial exemption gap. The consistent above-identity placement in panel (a) and the positive gaps in panel (b) across all states establish the baseline cross-sectional disparity.
 
 ---
 
@@ -422,15 +405,23 @@ The event study figure plots ATT(g,t) estimates with 95% CIs for all relative ti
 
 *(See `output/figures/obermeyer_audit.png`)*
 
-The figure plots mean BRFSS disability prevalence for Black (red) and white (blue) enrollees against overall state exemption rate octile. The vertical distance between lines at each octile represents the disability-exemption mismatch (mean: 6.59 pp). The consistent gap across octiles indicates that the mismatch does not narrow with increasing algorithm generosity.
+The figure plots mean BRFSS disability prevalence for Black (red) and White (blue) enrollees against overall state exemption rate octile (see corrected state assignments in Table above). The vertical distance between lines at each octile represents the disability-exemption mismatch (mean: 6.59 pp; 95% CI: 5.98–7.20). The consistent gap across octiles indicates that the mismatch does not narrow with increasing exemption generosity. Corrected state assignments: octile 1=FL/AR, 2=TN/AZ, 3=TX/OK, 4=GA/LA, 5=KY/OH, 6=NC/MI, 7=WI/IN, 8=NY/CA.
 
 ---
 
-## Figure S3: Geographic Analysis Detail {#figure-s3}
+## Figure S3: Synthetic Control Case Studies {#figure-s3}
+
+*(See `output/figures/synthetic_control_GA.png`, `output/figures/synthetic_control_MT.png`, `output/figures/synthetic_control_AR.png`)*
+
+Separate figures for Georgia 2023 (pre-treatment RMSPE=0.288 pp; post-treatment effect=3.41 pp; permutation p=0.182), Montana 2019 (pre-treatment RMSPE=0.019 pp; post-treatment effect=1.49 pp; permutation p=0.364), and Arkansas 2018 (pre-treatment RMSPE=0.765 pp; post-treatment effect=0.47 pp; permutation p=0.818). Each figure plots the observed treated state racial gap (solid line) against the synthetic control gap (dashed line) over 2016–2024. The Arkansas result is not distinguishable from the permutation distribution.
+
+---
+
+## Figure S4: Geographic Correlates of the Racial Exemption Gap {#figure-s4}
 
 *(See `output/figures/figure1_main_findings.png` panel 4)*
 
-Scatter plots of (a) state personal care provider count vs. racial exemption gap (Pearson r=−0.516, p=0.041) and (b) state rural population % vs. racial exemption gap (r=0.508, p=0.044). Georgia is labeled as an outlier (116 PC providers, 6.2 pp gap). California and New York cluster in the low-gap, high-provider quadrant.
+Scatter plots of (a) state personal care provider count vs. racial exemption gap (Pearson r=−0.516, p=0.041) and (b) state rural population % vs. racial exemption gap (r=0.508, p=0.044). Georgia is labeled (116 PC providers, 6.2 pp gap). California and New York cluster in the low-gap, high-provider quadrant, consistent with the provider-density mediation hypothesis.
 
 ---
 
@@ -470,4 +461,4 @@ python output/generate_report.py
 - `output/tables/*.csv`: All manuscript tables
 - `output/figures/*.png`: All manuscript figures
 
-*Correspondence: Sanjay Basu, MD PhD; Rajaie Batniji, MD PhD. Repository issues: https://github.com/sanjaybasu/medicaid-frailty-bias/issues*
+*Correspondence: Sanjay Basu, MD PhD; sanjay.basu@waymark.com. Repository issues: https://github.com/sanjaybasu/medicaid-frailty-bias/issues*

@@ -1,0 +1,15 @@
+State,WR_Status,Black_Expansion_Pop,BW_Exempt_Gap_pp,Estimated_Excess_Black_Losses,Approx_Lower,Approx_Upper
+Georgia,Active,634000,6.2,39318,37587,41049
+Florida,Pending,711000,4.5,31992,30553,33430
+Louisiana,Pending,464000,6.6,30634,29235,32033
+Ohio,Pending,453000,5.5,24940,23762,26117
+North Carolina,Active,475000,4.3,20428,19430,21425
+Michigan,Blocked,382000,5.2,19848,18899,20797
+Texas,Pending,406000,4.8,19483,18555,20411
+Tennessee,Pending,244000,4.5,10965,10445,11484
+Indiana,Active,152000,6.3,9547,9099,9996
+Wisconsin,Blocked,120000,5.5,6606,6285,6928
+Kentucky,Blocked,108000,5.4,5846,5566,6125
+Arizona,Pending,70000,4.5,3158,3007,3308
+Oklahoma,Pending,61000,4.3,2610,2484,2736
+Total_13_states,,,,225349,214907,235839

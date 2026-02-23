@@ -1,0 +1,18 @@
+State,WR_Status,Frailty_Determination_Basis,ADL_Threshold,Physician_Certification,Full_Ex_Parte,HIE_Integration,Stringency_Score
+Florida,Pending,Rule-based (ICD-10),2+ ADLs,Yes,No,No,2.4
+Arizona,Pending,Rule-based (ICD-10),2+ ADLs,Yes,No,No,2.8
+Tennessee,Pending,Rule-based (ICD-10),2+ ADLs,Yes,No,No,3.2
+Texas,Pending,Rule-based (ICD-10),2+ ADLs,Yes,No,No,3.5
+Arkansas,Terminated,Rule-based (ICD-10),2+ ADLs,Yes,No,No,3.8
+Oklahoma,Pending,Rule-based (ICD-10),2+ ADLs,Yes,Partial,No,4.1
+Georgia,Active,Rule-based (ICD-10),2+ ADLs,Yes,Partial,No,4.2
+Louisiana,Pending,Rule-based (ICD-10),2+ ADLs,Yes,No,No,4.8
+Kentucky,Blocked,Rule-based (ICD-10),2+ ADLs,Yes,No,No,5.0
+Ohio,Pending,Rule-based (ICD-10),2+ ADLs,Yes,No,No,5.3
+Indiana,Active,Claims-based CFI,1+ ADL,Yes,Partial,Partial,5.8
+Michigan,Blocked,Claims-based CFI,1+ ADL,No,Full,Partial,5.9
+North Carolina,Active,Rule-based (ICD-10),2+ ADLs,Yes,Partial,No,6.0
+Wisconsin,Blocked,Rule-based + CFI,1+ ADL,Yes,Partial,No,6.4
+Montana,Active,Rule-based (T1019 ex parte),1+ ADL,No,Full,No,est_6.8
+New York,None,Claims-based CFI,1+ ADL,No,Full,Full,8.4
+California,None,Claims-based CFI,1+ ADL,No,Full,Full,8.9

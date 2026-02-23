@@ -47,3 +47,11 @@ Thumbs.db
 
 # Logs
 *.log
+
+# Manuscript, appendix, and figures (not for public distribution pre-publication)
+manuscript.md
+output/appendix.md
+output/figures/
+output/manuscript.md
+output/health_affairs_report.md
+output/pipeline_report.md
