@@ -3,11 +3,11 @@
 **Authors:** Sanjay Basu, MD PhD<sup>1,2</sup>; Seth A. Berkowitz, MD, MPH<sup>3</sup>
 
 **Affiliations:**
-<sup>1</sup> Waymark, San Francisco, CA
-<sup>2</sup> Department of Medicine, University of California San Francisco, San Francisco, CA
+<sup>1</sup> Department of Medicine, University of California San Francisco, San Francisco, CA
+<sup>2</sup> Waymark, San Francisco, CA
 <sup>3</sup> Division of General Medicine and Clinical Epidemiology, Department of Medicine, University of North Carolina at Chapel Hill, Chapel Hill, NC
 
-**Corresponding author:** Sanjay Basu, MD PhD; Waymark, 985 Market St, San Francisco, CA 94103; sanjay.basu@waymark.com
+**Corresponding author:** Sanjay Basu, MD PhD; Department of Medicine, University of California San Francisco, 513 Parnassus Ave, San Francisco, CA 94143; sanjay.basu@ucsf.edu
 
 **Word count (abstract and main text, excluding endnotes, exhibits, and appendix):** approximately 2,870
 
@@ -23,13 +23,15 @@
 
 ## Abstract
 
-The One Big Beautiful Bill Act of 2025 (Public Law 119-21) mandates medically frail exemptions for Medicaid community engagement requirements, with state implementation due by January 2027; frailty is determined from claims-based administrative data that may identify disability at differential rates across racial groups. In a multi-state ecological and quasi-experimental analysis of 17 states representing 47.2 million Medicaid expansion adults over 2016–2024, community engagement requirement adoption increased the Black-White frailty exemption gap by 1.24 percentage points (95% CI: 0.80–1.68; p<0.001) in staggered difference-in-differences analysis. Before requirement adoption, Black enrollees were exempted at a mean rate of 12.21% versus 17.08% for White enrollees (mean gap: 4.87 percentage points; 95% CI: 4.29–5.45). At equivalent exemption rate levels, Black enrollees carried 6.59 percentage points higher BRFSS disability burden than White enrollees (95% CI: 5.98–7.20; t=25.63; p<0.001), and all 16 states with evaluable race-stratified data violated the equalized odds criterion (mean true positive rate gap: 23.84 percentage points; 95% CI: 20.7–26.9). Estimated excess coverage losses among Black enrollees totaled 225,349 across 13 states. Conditioning Centers for Medicare and Medicaid Services approval of state community engagement requirement plans on pre-deployment fairness testing and expanded administrative data integration may reduce these disparities.
+The One Big Beautiful Bill Act of 2025 (Public Law 119-21) mandates medically frail exemptions for Medicaid community engagement requirements, with state implementation due by January 2027; frailty is determined from claims-based administrative data that may identify disability at differential rates across racial groups. In a multi-state observational and quasi-experimental analysis of 17 states representing 47.2 million Medicaid expansion adults over 2016–2024, community engagement requirement adoption increased the Black-White frailty exemption gap by 1.24 percentage points (95% CI: 0.80–1.68; p<0.001) in staggered difference-in-differences analysis. Before requirement adoption, Black enrollees were exempted at a mean rate of 12.21% versus 17.08% for White enrollees (mean gap: 4.87 percentage points; 95% CI: 4.29–5.45). At equivalent exemption rate levels, Black enrollees carried 6.59 percentage points higher BRFSS disability burden than White enrollees (95% CI: 5.98–7.20; t=25.63; p<0.001), and all 16 states with evaluable race-stratified data violated the equalized odds criterion (mean true positive rate gap: 23.84 percentage points; 95% CI: 20.7–26.9). Estimated excess coverage losses among Black enrollees totaled 225,349 across 13 states. Conditioning Centers for Medicare and Medicaid Services approval of state community engagement requirement plans on pre-deployment fairness testing and expanded administrative data integration may reduce these disparities.
 
 ---
 
 ## Introduction
 
 The One Big Beautiful Bill Act of 2025 (Public Law 119-21) enacted mandatory community engagement requirements for Medicaid expansion adults, requiring states to implement 80-hour-per-month work or qualifying activity standards by January 1, 2027, with exemptions required for the medically frail.<sup>1</sup> Section 1115 waiver programs in 17 states have operated analogous requirements since 2018, providing implementation precedents on which federal standards will draw.<sup>2,3</sup> Under CMS guidance and individual waiver terms, states may use claims-based administrative data—primarily Medicaid Management Information System (MMIS) files—to automate frailty determination at scale, identifying qualifying individuals from ICD-10 diagnosis code density, Current Procedural Terminology service counts, or validated claims-based frailty indices (CFIs).
+
+The medically frail exemption is the central equity protection in this framework, yet its implementation has not been tested at federal scale. Under the Act and prior state waiver terms, "medically frail" encompasses individuals unable to perform two or more activities of daily living without assistance, those with serious chronic conditions or significant functional limitations, and those receiving home- and community-based waiver services—a statutory category that each state translates into operational criteria of varying stringency. In practice, states query their Medicaid Management Information System (MMIS) for clusters of ICD-10 diagnostic codes, elevated counts of personal care service claims (HCPCS T1019), or scores from validated claims-based frailty index (CFI) algorithms; a subset of states additionally require physician certification. Because OBBBA's requirements are not scheduled for implementation until January 1, 2027, the 17 states that have operated or proposed analogous Section 1115 waiver programs since 2018 are the only available empirical precedents. These programs use the same types of claims-based administrative frailty determination systems that OBBBA will require nationally, reviewed under the same CMS waiver approval framework. Findings from these antecedent programs are therefore the best available basis for anticipating the equity implications of federal implementation.
 
 Medicaid coverage reduces mortality and improves access to preventive and chronic disease care among low-income adults.<sup>4,5</sup> Community engagement requirements risk reversing these gains, particularly among frail enrollees whose exemptions depend on accurate administrative identification of disability. The accuracy of claims-based identification systems is not uniform across racial groups. Obermeyer and colleagues demonstrated that commercial health risk stratification algorithms systematically under-predict need for Black patients at equal predicted risk scores, because the algorithms are trained on healthcare utilization—which is suppressed for Black patients by structural barriers to care access.<sup>6</sup> The underlying mechanisms include geographic concentration of providers away from predominantly Black neighborhoods, lower primary care physician-to-population ratios in Black communities, greater care fragmentation across safety-net settings, and differential documentation of diagnoses across provider types.<sup>7,8,9</sup>
 
@@ -43,7 +45,9 @@ No prior study has conducted a systematic, multi-state empirical analysis of rac
 
 ### Study Design
 
-This is a multi-state ecological and quasi-experimental analysis of 17 US states with active, pending, blocked by court order, or terminated Medicaid community engagement requirement programs as of early 2024. The ecological analysis used the state as the unit of analysis. The quasi-experimental analysis used a state × year panel spanning 2016–2024. This study followed the STROBE statement and the RECORD extension for studies using routinely-collected health data.<sup>13,14</sup>
+This is a multi-state observational and quasi-experimental analysis of 17 US states with active, pending, blocked by court order, or terminated Medicaid community engagement requirement programs as of early 2024. The observational component used the state as the unit of analysis; the quasi-experimental component used a state × year panel spanning 2016–2024. This study followed the STROBE statement and the RECORD extension for studies using routinely-collected health data.<sup>13,14</sup>
+
+Four complementary methods address a sequence of questions about frailty exemption disparities. The calibration test asks whether the administrative system produces equivalent disability burdens at equivalent exemption rate levels across racial groups—establishing whether a structural identification gap exists at all. Equalized odds analysis then quantifies this gap in probabilistic terms: among genuinely disabled enrollees, does a Black enrollee have the same probability of receiving an exemption as an equally disabled White enrollee? Staggered difference-in-differences estimates the causal contribution of community engagement requirement adoption by comparing how racial exemption gaps evolved in states before and after program implementation against states that had not yet adopted requirements. Synthetic control analysis constructs individual-state counterfactuals as corroborating case-study evidence. Together these methods answer: does an identification gap exist and how large is it; did requirement adoption cause it to grow; and do individual-state patterns corroborate the aggregate estimate?
 
 ### Data Sources
 
@@ -63,7 +67,7 @@ This is a multi-state ecological and quasi-experimental analysis of 17 US states
 
 **Staggered difference-in-differences.** We applied the Callaway and Sant'Anna (2021) estimator for staggered treatment adoption, constructing group-time average treatment effects ATT(g,t) using not-yet-treated states as comparison units.<sup>17,18,19,20</sup> We aggregated to an overall ATT using canonical aggregation weights and assessed the parallel trends assumption via pre-treatment placebo tests. We applied the Rambachan-Roth sensitivity analysis to bound violations of parallel trends.<sup>21</sup> The panel comprised 16 states × 9 years (2016–2024) = 144 state-year observations; 5 treated states, 11 comparison states. Standard errors were estimated by bootstrap (B=999 replications).
 
-**Synthetic control analysis.** We applied the Abadie-Diamond-Hainmueller synthetic control method<sup>22,23,24</sup> to three case-study states (Arkansas 2018, Georgia 2023, Montana 2019) as supplementary evidence. Statistical significance was assessed by RMSPE-ratio permutation inference across 11 donor states (minimum achievable permutation p=1/11≈0.091). The staggered DiD aggregate ATT provides the primary causal estimate.
+**Synthetic control analysis.** The synthetic control method constructs a weighted combination of untreated comparison states—the synthetic control—that best reproduces a treated state's pre-treatment racial exemption gap trend, then tracks whether the treated and synthetic states diverge after program adoption.<sup>22,23,24</sup> Unlike difference-in-differences, which estimates an average effect across all treated states jointly, the synthetic control provides a state-by-state visual check: if the treated state's gap widens after adoption while its synthetic counterpart's does not, this constitutes case-study evidence of a program effect in that state. We applied this method to three states (Arkansas 2018, Georgia 2023, Montana 2019). Statistical significance was assessed by permutation inference: the same procedure was applied to each untreated donor state in turn, and we tested whether any donor showed as large a post-treatment divergence as the true treated state; with 11 donor states the minimum achievable permutation p-value is 1/11≈0.091. The staggered DiD aggregate ATT provides the primary causal estimate; synthetic controls are supplementary corroborating evidence.
 
 **Coverage loss estimation.** Excess Black coverage losses were estimated as (racial gap, pp / 100) × Black expansion population per state, using the Arkansas 2018 benchmark disenrollment rate (6.7% of targeted adults<sup>11</sup>). Full assumptions and confidence intervals are in Appendix B.5 and Appendix Table A2.
 
@@ -81,19 +85,21 @@ Across 17 study states, the estimated Medicaid expansion adult population aged 1
 
 Black Medicaid enrollees were exempted at a mean rate of 12.21% (range: 5.9% [Florida] to 25.1% [California]) versus 17.08% for White enrollees (range: 10.4% [Florida] to 27.4% [California]) (Table 1). The mean Black-White exemption gap was 4.87 pp (95% CI: 4.29–5.45; SE=0.273; range: 2.3 pp [California] to 6.6 pp [Louisiana]). States with active community engagement requirements and low policy stringency showed the largest racial gaps (Georgia: 6.2 pp; Louisiana: 6.6 pp; Indiana: 6.3 pp), while states without active requirements and high stringency showed the smallest gaps (California: 2.3 pp; New York: 3.4 pp).
 
-The Callaway-Sant'Anna staggered difference-in-differences estimated that community engagement requirement adoption increased the Black-White frailty exemption gap by 1.24 pp (95% CI: 0.80–1.68; p<0.001) (Table 3; Figure 1). The pre-treatment average ATT across all cohorts and pre-treatment periods was −0.023 pp (SE=0.202; p=0.910), and no individual pre-treatment ATT(g,t) was significantly different from zero (all p>0.30), supporting the parallel trends assumption (Figure 1).
+The Callaway-Sant'Anna staggered difference-in-differences estimated that community engagement requirement adoption increased the Black-White frailty exemption gap by 1.24 pp (95% CI: 0.80–1.68; p<0.001) (Table 2; Figure 1). The pre-treatment average ATT across all cohorts and pre-treatment periods was −0.023 pp (SE=0.202; p=0.910), and no individual pre-treatment ATT(g,t) was significantly different from zero (all p>0.30), supporting the parallel trends assumption (Figure 1).
 
 Cohort-specific estimates showed heterogeneity by implementation period. The g=2023 cohort (Georgia and North Carolina)—which provides more credible identification given seven pre-treatment periods—showed ATTs of 1.53 pp at treatment year t=0 (95% CI: 0.20–2.86; p=0.024) and 1.61 pp at t=+1 (95% CI: 0.05–3.18; p=0.044). The g=2018 cohort (Arkansas and Indiana) showed an ATT of 2.17 pp at t=0 (95% CI: 0.52–3.82; p=0.010), attenuating in subsequent years consistent with Arkansas's suspension of its requirement in March 2019 following a federal court order. The Rambachan-Roth sensitivity analysis confirms the aggregate ATT remains significantly positive under parallel trends violations up to 0.40 pp per year, which exceeds any observed pre-trend deviation (Appendix B.3).<sup>21</sup> Synthetic control case studies for Georgia, Montana, and Arkansas are presented in Appendix Figure S3; none achieved conventional significance thresholds given the minimum achievable permutation p-value with 11 donor states.
 
 ### Equalized Odds and Calibration Evaluation
 
-All 16 states (100%) violated the equalized odds criterion: frail Black enrollees had a lower probability of receiving a correct frailty exemption than frail White enrollees with equivalent disability burden (Table 2). The mean Black-White TPR gap was 23.84 pp (95% CI: 20.7–26.9 pp); mean Black TPR was 35.1% versus mean White TPR 58.9%. TPR gaps were largest in Indiana (33.2 pp), Wisconsin (32.8 pp), and New York (29.0 pp). The mean FPR gap was 0.39 pp, confirming the violation was driven by under-identification of genuinely frail Black enrollees rather than over-identification of non-frail White enrollees. These findings are consistent with the Chouldechova impossibility theorem: when true disability prevalence is higher among Black enrollees than White enrollees—as observed here in all 16 states—simultaneous calibration and equalized odds cannot be achieved without prediction error.<sup>16</sup>
+All 16 states (100%) violated the equalized odds criterion: frail Black enrollees had a lower probability of receiving a correct frailty exemption than frail White enrollees with equivalent disability burden (Figure 2). The mean Black-White TPR gap was 23.84 pp (95% CI: 20.7–26.9 pp); mean Black TPR was 35.1% versus mean White TPR 58.9%. TPR gaps were largest in Indiana (33.2 pp), Wisconsin (32.8 pp), and New York (29.0 pp). The mean FPR gap was 0.39 pp, confirming the violation was driven by under-identification of genuinely frail Black enrollees rather than over-identification of non-frail White enrollees. These findings are consistent with the Chouldechova impossibility theorem: when true disability prevalence is higher among Black enrollees than White enrollees—as observed here in all 16 states—simultaneous calibration and equalized odds cannot be achieved without prediction error.<sup>16</sup>
 
 Black enrollees also had higher mean BRFSS disability burden than White enrollees at equivalent exemption rate levels in all eight octile bins (Appendix Figure S2). The mean Black-White disability gap across octile bins was 6.59 pp (95% CI: 5.98–7.20; SE=0.257; t=25.63; df=7; p<0.001), ranging from 5.10 pp in the second octile to 7.55 pp in the seventh octile, with no systematic narrowing as overall exemption rates increased—indicating that under-identification of Black frailty does not diminish with more generous overall frailty criteria.
 
 ### Geographic Analysis and Estimated Excess Coverage Losses
 
-Personal care (T1019) provider density was inversely correlated with the Black-White exemption gap across states (Pearson r=−0.516; 95% CI: −0.77 to −0.11; p=0.041; Appendix Figure S4). States with above-median rurality showed a mean exemption gap of 5.27 pp versus 4.21 pp in below-median rurality states (difference: 1.05 pp; 95% CI: 0.07–2.03 pp; p=0.038). Applying race-stratified exemption gaps to state Black expansion population denominators, we estimated 225,349 excess Medicaid coverage losses among Black enrollees attributable to the racial exemption gap relative to a zero-gap counterfactual, across 13 states with active, pending, or blocked programs (Appendix Table A2; excluding Montana [missing race data], Arkansas [terminated], California, and New York [no requirement]). Georgia (approximately 39,300 excess losses), Florida (approximately 32,000), and Louisiana (approximately 30,600) contributed the largest state-specific estimates.
+Personal care (T1019) provider density was inversely correlated with the Black-White exemption gap (Pearson r=−0.516; 95% CI: −0.77 to −0.11; p=0.041), and rurality was positively correlated with the gap (Pearson r=0.508; 95% CI: 0.02–0.80; p=0.044; Appendix Figure S4). States with above-median rurality (≥25% rural population; n=9) showed a mean exemption gap of 5.27 pp versus 4.21 pp in states with below-median rurality (n=7; difference: 1.05 pp; 95% CI: 0.07–2.03 pp; p=0.038). The geographic patterns converge at the extremes: Georgia, with 116 active T1019 providers—the fewest of any study state—and an active community engagement requirement, showed the second-largest exemption gap (6.2 pp); California, with 3,200 active providers, 5% rural population, and no requirement, showed the smallest gap (2.3 pp). These associations suggest that sparse personal care provider networks and high rurality reduce the density of qualifying claims records for all enrollees, but this documentation deficit falls disproportionately on Black enrollees who carry higher underlying disability burden that a thin claims record fails to capture.
+
+Applying race-stratified exemption gaps to state Black expansion population denominators, we estimated 225,349 excess Medicaid coverage losses among Black enrollees attributable to the racial exemption gap relative to a zero-gap counterfactual, across 13 states with active, pending, or blocked programs (Appendix Table A2; excluding Montana [missing race data], Arkansas [terminated], California, and New York [no requirement]). Georgia (approximately 39,300 excess losses), Florida (approximately 32,000), and Louisiana (approximately 30,600) contributed the largest state-specific estimates. State-level coverage losses are presented in Figure 3.
 
 ---
 
@@ -109,7 +115,7 @@ The pattern observed here is consistent with published evidence on differential 
 
 ### Policy Implications
 
-Three policy implications follow from these findings. First, CMS retains authority under 42 C.F.R. § 430.25 and OBBBA rulemaking provisions to require, as standard terms and conditions in state waiver approval letters, that states demonstrate their frailty determination systems do not produce statistically significant TPR disparities across racial groups at equivalent disability burden levels.<sup>1</sup> The ecological calibration test and equalized odds evaluation adapted here provide an implementable template for pre-deployment fairness assessment. Second, HIE integration—which reduces claims lag and supplements MMIS data with clinically richer records—should be a minimum adequacy standard for automated frailty determination rather than an optional design feature, given evidence that provider density mediates the racial exemption gap. Third, physician certification requirements impose differential procedural barriers on enrollees in communities with lower primary care access; replacement with ex parte data-driven determination would reduce this source of disparity.
+Four policy implications follow from these findings. First, CMS retains authority under 42 C.F.R. § 430.25 and OBBBA rulemaking provisions to require, as standard terms and conditions in state waiver approval letters, that states demonstrate their frailty determination systems do not produce statistically significant TPR disparities across racial groups at equivalent disability burden levels.<sup>1</sup> The calibration test and equalized odds evaluation adapted here provide an implementable template for pre-deployment fairness assessment. Second, HIE integration—which reduces claims lag and supplements MMIS data with clinically richer records—should be a minimum adequacy standard for automated frailty determination rather than an optional design feature, given evidence that provider density mediates the racial exemption gap. Third, physician certification requirements impose differential procedural barriers on enrollees in communities with lower primary care access; replacement with ex parte data-driven determination would reduce this source of disparity. Fourth, the positive correlation between rurality and exemption gaps (r=0.508; p=0.044) indicates that states with sparse personal care provider networks face a structural data-adequacy problem that HIE integration alone may not resolve; CMS should require that rural and frontier states supplement MMIS claims queries with long-term services and supports (LTSS) administrative data, Area Agencies on Aging records, and SNAP disability-status flags as alternative frailty signals that are less dependent on healthcare utilization density.
 
 ### Limitations
 
@@ -153,37 +159,9 @@ Black Medicaid enrollees are under-identified as medically frail relative to Whi
 
 ---
 
-### Table 2. Algorithmic Fairness Metrics by State
+### Table 2. Staggered Difference-in-Differences: Effect of Community Engagement Requirement Adoption on Black-White Exemption Gap
 
-*TPR (true positive rate): probability of receiving a frailty exemption given BRFSS disability above the threshold. FPR (false positive rate): probability of exemption given disability below threshold. TPR gap (White TPR minus Black TPR, pp): positive values indicate frail Black enrollees have a lower probability of correct identification than frail White enrollees (equalized odds violation). Estimated via parametric microsimulation (N=100,000 × 1,000 replications). Disability threshold: 30.5% (weighted mean state BRFSS disability prevalence). Montana excluded (missing race-stratified exemption data). States sorted by ascending stringency score.*
-
-| State | Stringency (0–10) | Black TPR (%) | White TPR (%) | TPR Gap (pp) | Black FPR (%) | White FPR (%) | Equalized Odds Violation |
-|---|---|---|---|---|---|---|---|
-| Florida | 2.4 | 17.3 | 37.3 | 20.0 | 0.0 | 0.0 | Yes |
-| Arizona | 2.8 | 22.6 | 40.9 | 18.3 | 0.0 | 0.0 | Yes |
-| Tennessee | 3.2 | 17.5 | 34.9 | 17.4 | 0.0 | 0.0 | Yes |
-| Texas | 3.5 | 23.0 | 46.0 | 23.0 | 0.0 | 0.0 | Yes |
-| Arkansas | 3.8 | 15.8 | 32.6 | 16.8 | 0.0 | 0.0 | Yes |
-| Oklahoma | 4.1 | 23.9 | 42.4 | 18.5 | 0.0 | 0.0 | Yes |
-| Georgia | 4.2 | 25.6 | 54.4 | 28.9 | 0.0 | 0.0 | Yes |
-| Louisiana | 4.8 | 27.0 | 53.8 | 26.9 | 0.0 | 0.0 | Yes |
-| Kentucky | 5.0 | 26.9 | 47.5 | 20.6 | 0.0 | 0.0 | Yes |
-| Ohio | 5.3 | 33.4 | 60.5 | 27.1 | 0.0 | 0.0 | Yes |
-| Indiana | 5.8 | 54.4 | 87.6 | 33.2 | 0.0 | 0.0 | Yes |
-| Michigan | 5.9 | 38.5 | 66.1 | 27.6 | 0.0 | 0.0 | Yes |
-| North Carolina | 6.0 | 39.7 | 64.4 | 24.8 | 0.0 | 0.0 | Yes |
-| Wisconsin | 6.4 | 40.9 | 73.7 | 32.8 | 0.0 | 0.0 | Yes |
-| New York | 8.4 | 71.0 | 100.0 | 29.0 | 0.0 | 2.1 | Yes |
-| California | 8.9 | 83.4 | 100.0 | 16.6 | 0.0 | 4.1 | Yes |
-| **Mean (16 states)** | **5.0** | **35.1** | **58.9** | **23.84 (95% CI: 20.7–26.9)** | **0.0** | **0.4** | **100% (16/16)** |
-
-*The Chouldechova (2017) fairness impossibility theorem establishes that when Black enrollees have higher true disability prevalence than White enrollees (as observed here in all 16 states; mean B-W disability gap = 6.7 pp), simultaneous calibration and equalized odds cannot be achieved without prediction error.<sup>16</sup> Equalized odds violation (TPR parity) is reported as the primary fairness criterion because it ensures equal access to exemption for genuinely frail individuals regardless of race. A state-level ecological calibration test confirmed a 6.59 pp (95% CI: 5.98–7.20) Black-White disability gap at equivalent exemption rate levels (t=25.63; p<0.001; see Appendix B.1 and Figure S2).*
-
----
-
-### Table 3. Staggered Difference-in-Differences: Effect of Community Engagement Requirement Adoption on Black-White Exemption Gap
-
-*ATT: average treatment effect on the treated, estimated using the Callaway-Sant'Anna (2021) estimator with not-yet-treated states as comparison units.<sup>17</sup> ATT(g,t): group-time average treatment effect for cohort g (year of first program adoption) at calendar year t. The overall ATT aggregates across all cohorts and post-treatment periods using canonical weights. The pre-treatment ATT (all periods t<g) is the primary parallel trends diagnostic. Standard errors by bootstrap (B=999). Montana (single-state g=2019 cohort) included in the overall ATT but omitted from cohort rows for stability.*
+*ATT: average treatment effect on the treated, estimated using the Callaway-Sant'Anna (2021) estimator with not-yet-treated states as comparison units.<sup>17</sup> ATT(g,t): group-time average treatment effect for cohort g (year of first program adoption) at calendar year t. The overall ATT aggregates across all cohorts and post-treatment periods using canonical weights. The pre-treatment ATT (all periods t&lt;g) is the primary parallel trends diagnostic. Standard errors by bootstrap (B=999). Montana (single-state g=2019 cohort) included in the overall ATT but omitted from cohort rows for stability.*
 
 | Estimate | Cohort g | Period t | Relative Time | ATT (pp) | 95% CI | p-value |
 |---|---|---|---|---|---|---|
@@ -203,11 +181,15 @@ Black Medicaid enrollees are under-identified as medically frail relative to Whi
 
 - **Figure 1.** Callaway-Sant'Anna event study. ATT(g,t) estimates with 95% confidence intervals (bootstrap, B=999) plotted against relative time to community engagement requirement adoption (t=0). Pre-treatment estimates (relative time < 0) cluster near zero (mean: −0.023 pp; SE=0.202; p=0.910), supporting the parallel trends assumption. A discrete increase in ATT is observed at t=0 (aggregate ATT: 1.24 pp; 95% CI: 0.80–1.68; p<0.001). Cohort g=2023 (Georgia, North Carolina; seven pre-treatment periods) provides the principal identification; cohort g=2018 (Arkansas, Indiana; two pre-treatment periods) shows early ATT attenuation consistent with the Arkansas program suspension. *(See output/figures/event\_study\_did.png)*
 
----
+- **Figure 2.** Black and White true positive rates (TPR) and Black-White TPR gap for medically frail exemption, by state. Each state is represented by two points (Black TPR, filled circle; White TPR, open circle) connected by a horizontal line indicating the TPR gap. States are sorted by ascending policy stringency score (0–10 scale). TPR: probability of receiving a frailty exemption given BRFSS disability prevalence above the 30.5% threshold, estimated by parametric microsimulation (N=100,000 × 1,000 replications). All 16 states fall below the equalized odds threshold (Black TPR < White TPR; TPR gap > 0); mean TPR gap = 23.84 pp (95% CI: 20.7–26.9). Montana excluded (missing race-stratified exemption data). Source data: *output/tables/exhibit\_table2\_equalized\_odds.csv.*
+
+- **Figure 3.** Estimated excess Black Medicaid coverage losses attributable to the racial frailty exemption gap, by state (N=13 states). Bars represent point estimates; excess losses = (Black-White exemption gap, pp / 100) × state Black Medicaid expansion population. States are sorted by descending estimated losses. Estimates assume full community engagement requirement enforcement and represent upper bounds on coverage losses attributable to the exemption gap alone. Excludes Montana (missing race-stratified data), Arkansas (program terminated), California and New York (no requirement). Total: 225,349 excess losses. See Appendix Table A2 for uncertainty ranges. Source data: *output/tables/exhibit\_table5\_coverage\_losses.csv.*
 
 ---
 
-### Table 4. State Frailty Exemption Policy Characteristics
+---
+
+### Table 3. State Frailty Exemption Policy Characteristics
 
 *N=17 states. Policy stringency score (0–10): higher scores indicate more inclusive frailty exemption criteria; construction detailed in Appendix Methods A.3. CFI=claims-based frailty index. HIE=health information exchange. Ex parte=proactive administrative determination without enrollee-initiated documentation. States sorted by ascending stringency score.*
 
@@ -235,34 +217,11 @@ Black Medicaid enrollees are under-identified as medically frail relative to Whi
 
 ---
 
-### Table 5. Estimated Excess Black Medicaid Coverage Losses Attributable to the Racial Frailty Exemption Gap
-
-*N=13 states with active, blocked, or pending community engagement requirement programs and available race-stratified exemption data. Excess losses = (Black-White exemption gap, pp / 100) × state Black Medicaid expansion population denominator. Estimates assume full community engagement requirement enforcement and represent upper bounds on coverage impact attributable to the racial exemption gap. Excludes: Montana (missing race-stratified exemption rates); Arkansas (program terminated March 2019); California and New York (no community engagement requirement). Sorted by descending estimated losses.*
-
-| State | WR Status | Black Expansion Population | B–W Exemption Gap (pp) | Estimated Excess Black Coverage Losses |
-|---|---|---|---|---|
-| Georgia | Active | 634,000 | 6.2 | 39,318 |
-| Florida | Pending | 711,000 | 4.5 | 31,992 |
-| Louisiana | Pending | 464,000 | 6.6 | 30,634 |
-| Ohio | Pending | 453,000 | 5.5 | 24,940 |
-| North Carolina | Active | 475,000 | 4.3 | 20,428 |
-| Michigan | Blocked | 382,000 | 5.2 | 19,848 |
-| Texas | Pending | 406,000 | 4.8 | 19,483 |
-| Tennessee | Pending | 244,000 | 4.5 | 10,965 |
-| Indiana | Active | 152,000 | 6.3 | 9,547 |
-| Wisconsin | Blocked | 120,000 | 5.5 | 6,606 |
-| Kentucky | Blocked | 108,000 | 5.4 | 5,846 |
-| Arizona | Pending | 70,000 | 4.5 | 3,158 |
-| Oklahoma | Pending | 61,000 | 4.3 | 2,610 |
-| **Total (13 states)** | | | | **225,349** |
-
-B–W=Black-White. pp=percentage points. WR=community engagement requirement.
-
 ---
 
 ## Appendix Figures and Tables
 
-Appendix Figure S1 presents a four-panel summary figure of raw disparity patterns. Appendix Figure S2 presents the ecological calibration test (Obermeyer-style state-level audit) by octile. Appendix Figure S3 presents synthetic control case studies for Georgia 2023, Montana 2019, and Arkansas 2018. Appendix Figure S4 presents geographic correlates of the racial exemption gap (T1019 provider density and rurality). Appendix Table A1 presents the full 17-state frailty policy database with primary source citations. Appendix Table A2 presents state-level estimated excess Black coverage losses with uncertainty ranges. Appendix Table A3 presents the exploratory OLS policy regression (n=16; severely underpowered; retained for transparency).
+Appendix Figure S1 presents a four-panel summary figure of raw disparity patterns. Appendix Figure S2 presents the calibration test (Obermeyer-style state-level audit) by octile. Appendix Figure S3 presents synthetic control case studies for Georgia 2023, Montana 2019, and Arkansas 2018. Appendix Figure S4 presents geographic correlates of the racial exemption gap (T1019 provider density and rurality). Appendix Table A1 presents the full 17-state frailty policy database with primary source citations. Appendix Table A2 presents state-level estimated excess Black coverage losses with uncertainty ranges. Appendix Table A3 presents the exploratory OLS policy regression (n=16; severely underpowered; retained for transparency). Main-text Figure 2 presents state-level equalized odds results (Black and White TPR by state); main-text Figure 3 presents estimated excess Black coverage losses by state.
 
 ---
 
