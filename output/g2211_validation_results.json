@@ -1,0 +1,980 @@
+{
+  "summary": {
+    "total_g2211_npis": 8195,
+    "total_g2211_claims": 3706675,
+    "total_g2211_beneficiaries": 3308737,
+    "redesigned_coverage_pct": 52.6,
+    "specialist_only_coverage_pct": 14.2,
+    "n_states_with_g2211": 54,
+    "top_5_states": [
+      "NY",
+      "PA",
+      "NC",
+      "OR",
+      "OH"
+    ]
+  },
+  "specialty_distribution": [
+    {
+      "icd10_domain": "other",
+      "specialty_name": "Other Specialty",
+      "n_providers": 3338,
+      "total_claims": 1758521,
+      "total_beneficiaries": 1576625,
+      "mean_claims_per_provider": 526.8187537447574,
+      "pct_of_providers": 40.73,
+      "pct_of_claims": 47.44
+    },
+    {
+      "icd10_domain": "general",
+      "specialty_name": "Pediatrics",
+      "n_providers": 657,
+      "total_claims": 460598,
+      "total_beneficiaries": 413106,
+      "mean_claims_per_provider": 701.062404870624,
+      "pct_of_providers": 8.02,
+      "pct_of_claims": 12.43
+    },
+    {
+      "icd10_domain": "general",
+      "specialty_name": "Family Medicine",
+      "n_providers": 1165,
+      "total_claims": 425462,
+      "total_beneficiaries": 365642,
+      "mean_claims_per_provider": 365.2034334763949,
+      "pct_of_providers": 14.22,
+      "pct_of_claims": 11.48
+    },
+    {
+      "icd10_domain": "general",
+      "specialty_name": "Internal Medicine",
+      "n_providers": 1074,
+      "total_claims": 322507,
+      "total_beneficiaries": 283408,
+      "mean_claims_per_provider": 300.2858472998138,
+      "pct_of_providers": 13.11,
+      "pct_of_claims": 8.7
+    },
+    {
+      "icd10_domain": "general",
+      "specialty_name": "General Practice",
+      "n_providers": 79,
+      "total_claims": 79039,
+      "total_beneficiaries": 71294,
+      "mean_claims_per_provider": 1000.493670886076,
+      "pct_of_providers": 0.96,
+      "pct_of_claims": 2.13
+    },
+    {
+      "icd10_domain": "I00-I99",
+      "specialty_name": "Cardiovascular Disease",
+      "n_providers": 311,
+      "total_claims": 76450,
+      "total_beneficiaries": 70181,
+      "mean_claims_per_provider": 245.81993569131834,
+      "pct_of_providers": 3.79,
+      "pct_of_claims": 2.06
+    },
+    {
+      "icd10_domain": "N00-N99",
+      "specialty_name": "Nephrology",
+      "n_providers": 264,
+      "total_claims": 76161,
+      "total_beneficiaries": 67155,
+      "mean_claims_per_provider": 288.4886363636364,
+      "pct_of_providers": 3.22,
+      "pct_of_claims": 2.05
+    },
+    {
+      "icd10_domain": "N00-N99",
+      "specialty_name": "Urology",
+      "n_providers": 175,
+      "total_claims": 68368,
+      "total_beneficiaries": 61406,
+      "mean_claims_per_provider": 390.6742857142857,
+      "pct_of_providers": 2.14,
+      "pct_of_claims": 1.84
+    },
+    {
+      "icd10_domain": "general",
+      "specialty_name": "Dermatology",
+      "n_providers": 69,
+      "total_claims": 60004,
+      "total_beneficiaries": 54590,
+      "mean_claims_per_provider": 869.6231884057971,
+      "pct_of_providers": 0.84,
+      "pct_of_claims": 1.62
+    },
+    {
+      "icd10_domain": "G10-G99",
+      "specialty_name": "Neurology",
+      "n_providers": 183,
+      "total_claims": 51415,
+      "total_beneficiaries": 47224,
+      "mean_claims_per_provider": 280.95628415300547,
+      "pct_of_providers": 2.23,
+      "pct_of_claims": 1.39
+    },
+    {
+      "icd10_domain": "F20-F48",
+      "specialty_name": "Clinical Social Worker",
+      "n_providers": 31,
+      "total_claims": 45588,
+      "total_beneficiaries": 40891,
+      "mean_claims_per_provider": 1470.5806451612902,
+      "pct_of_providers": 0.38,
+      "pct_of_claims": 1.23
+    },
+    {
+      "icd10_domain": "M00-M99",
+      "specialty_name": "Rheumatology",
+      "n_providers": 143,
+      "total_claims": 42386,
+      "total_beneficiaries": 39660,
+      "mean_claims_per_provider": 296.4055944055944,
+      "pct_of_providers": 1.74,
+      "pct_of_claims": 1.14
+    },
+    {
+      "icd10_domain": "E00-E90",
+      "specialty_name": "Endocrinology",
+      "n_providers": 154,
+      "total_claims": 41133,
+      "total_beneficiaries": 37295,
+      "mean_claims_per_provider": 267.0974025974026,
+      "pct_of_providers": 1.88,
+      "pct_of_claims": 1.11
+    },
+    {
+      "icd10_domain": "general",
+      "specialty_name": "Nurse Practitioner",
+      "n_providers": 82,
+      "total_claims": 37505,
+      "total_beneficiaries": 33418,
+      "mean_claims_per_provider": 457.3780487804878,
+      "pct_of_providers": 1.0,
+      "pct_of_claims": 1.01
+    },
+    {
+      "icd10_domain": "M00-M99",
+      "specialty_name": "Orthopaedic Surgery",
+      "n_providers": 31,
+      "total_claims": 33891,
+      "total_beneficiaries": 31023,
+      "mean_claims_per_provider": 1093.258064516129,
+      "pct_of_providers": 0.38,
+      "pct_of_claims": 0.91
+    },
+    {
+      "icd10_domain": "F20-F48",
+      "specialty_name": "Psychiatry",
+      "n_providers": 56,
+      "total_claims": 23327,
+      "total_beneficiaries": 20902,
+      "mean_claims_per_provider": 416.55357142857144,
+      "pct_of_providers": 0.68,
+      "pct_of_claims": 0.63
+    },
+    {
+      "icd10_domain": "general",
+      "specialty_name": "Physician Assistant",
+      "n_providers": 64,
+      "total_claims": 18693,
+      "total_beneficiaries": 17410,
+      "mean_claims_per_provider": 292.078125,
+      "pct_of_providers": 0.78,
+      "pct_of_claims": 0.5
+    },
+    {
+      "icd10_domain": "F20-F48",
+      "specialty_name": "Psychologist",
+      "n_providers": 37,
+      "total_claims": 15929,
+      "total_beneficiaries": 14265,
+      "mean_claims_per_provider": 430.5135135135135,
+      "pct_of_providers": 0.45,
+      "pct_of_claims": 0.43
+    },
+    {
+      "icd10_domain": "general",
+      "specialty_name": "Geriatric Medicine",
+      "n_providers": 55,
+      "total_claims": 14530,
+      "total_beneficiaries": 13483,
+      "mean_claims_per_provider": 264.1818181818182,
+      "pct_of_providers": 0.67,
+      "pct_of_claims": 0.39
+    },
+    {
+      "icd10_domain": "J00-J99",
+      "specialty_name": "Pulmonology",
+      "n_providers": 60,
+      "total_claims": 9413,
+      "total_beneficiaries": 8708,
+      "mean_claims_per_provider": 156.88333333333333,
+      "pct_of_providers": 0.73,
+      "pct_of_claims": 0.25
+    },
+    {
+      "icd10_domain": "F20-F48",
+      "specialty_name": "Child Psychiatry",
+      "n_providers": 11,
+      "total_claims": 8652,
+      "total_beneficiaries": 8054,
+      "mean_claims_per_provider": 786.5454545454545,
+      "pct_of_providers": 0.13,
+      "pct_of_claims": 0.23
+    },
+    {
+      "icd10_domain": "M00-M99",
+      "specialty_name": "Physical Medicine/Rehab",
+      "n_providers": 15,
+      "total_claims": 7205,
+      "total_beneficiaries": 6169,
+      "mean_claims_per_provider": 480.3333333333333,
+      "pct_of_providers": 0.18,
+      "pct_of_claims": 0.19
+    },
+    {
+      "icd10_domain": "C00-D49",
+      "specialty_name": "Medical Oncology",
+      "n_providers": 30,
+      "total_claims": 6720,
+      "total_beneficiaries": 5770,
+      "mean_claims_per_provider": 224.0,
+      "pct_of_providers": 0.37,
+      "pct_of_claims": 0.18
+    },
+    {
+      "icd10_domain": "C00-D49",
+      "specialty_name": "Radiation Oncology",
+      "n_providers": 24,
+      "total_claims": 5576,
+      "total_beneficiaries": 5189,
+      "mean_claims_per_provider": 232.33333333333334,
+      "pct_of_providers": 0.29,
+      "pct_of_claims": 0.15
+    },
+    {
+      "icd10_domain": "I00-I99",
+      "specialty_name": "Interventional Cardiology",
+      "n_providers": 32,
+      "total_claims": 5574,
+      "total_beneficiaries": 5031,
+      "mean_claims_per_provider": 174.1875,
+      "pct_of_providers": 0.39,
+      "pct_of_claims": 0.15
+    },
+    {
+      "icd10_domain": "G10-G99",
+      "specialty_name": "Neurology (Child)",
+      "n_providers": 17,
+      "total_claims": 4817,
+      "total_beneficiaries": 4598,
+      "mean_claims_per_provider": 283.3529411764706,
+      "pct_of_providers": 0.21,
+      "pct_of_claims": 0.13
+    },
+    {
+      "icd10_domain": "general",
+      "specialty_name": "Gastroenterology",
+      "n_providers": 23,
+      "total_claims": 3530,
+      "total_beneficiaries": 3112,
+      "mean_claims_per_provider": 153.47826086956522,
+      "pct_of_providers": 0.28,
+      "pct_of_claims": 0.1
+    },
+    {
+      "icd10_domain": "F20-F48",
+      "specialty_name": "Counselor",
+      "n_providers": 8,
+      "total_claims": 2858,
+      "total_beneficiaries": 2690,
+      "mean_claims_per_provider": 357.25,
+      "pct_of_providers": 0.1,
+      "pct_of_claims": 0.08
+    },
+    {
+      "icd10_domain": "F10-F19",
+      "specialty_name": "Substance Use Program",
+      "n_providers": 4,
+      "total_claims": 439,
+      "total_beneficiaries": 249,
+      "mean_claims_per_provider": 109.75,
+      "pct_of_providers": 0.05,
+      "pct_of_claims": 0.01
+    },
+    {
+      "icd10_domain": "C00-D49",
+      "specialty_name": "Surgical Oncology",
+      "n_providers": 1,
+      "total_claims": 298,
+      "total_beneficiaries": 137,
+      "mean_claims_per_provider": 298.0,
+      "pct_of_providers": 0.01,
+      "pct_of_claims": 0.01
+    },
+    {
+      "icd10_domain": "F10-F19",
+      "specialty_name": "Addiction Medicine",
+      "n_providers": 1,
+      "total_claims": 74,
+      "total_beneficiaries": 40,
+      "mean_claims_per_provider": 74.0,
+      "pct_of_providers": 0.01,
+      "pct_of_claims": 0.0
+    },
+    {
+      "icd10_domain": "F20-F48",
+      "specialty_name": "Geriatric Psychiatry",
+      "n_providers": 1,
+      "total_claims": 12,
+      "total_beneficiaries": 12,
+      "mean_claims_per_provider": 12.0,
+      "pct_of_providers": 0.01,
+      "pct_of_claims": 0.0
+    }
+  ],
+  "redesigned_coverage": {
+    "total_g2211_claims": 3706675,
+    "total_g2211_providers": 8195,
+    "redesigned_specialist_claims": 526286,
+    "redesigned_specialist_pct": 14.2,
+    "primary_care_claims": 1421868,
+    "primary_care_pct": 38.4,
+    "other_specialty_claims": 1758521,
+    "other_specialty_pct": 47.4,
+    "redesigned_specialist_providers": 1589,
+    "primary_care_providers": 3268,
+    "combined_redesigned_plus_pcp_pct": 52.6,
+    "domain_breakdown": {
+      "N00-N99": {
+        "n_providers": 439,
+        "total_claims": 144529
+      },
+      "F20-F48": {
+        "n_providers": 144,
+        "total_claims": 96366
+      },
+      "M00-M99": {
+        "n_providers": 189,
+        "total_claims": 83482
+      },
+      "I00-I99": {
+        "n_providers": 343,
+        "total_claims": 82024
+      },
+      "G10-G99": {
+        "n_providers": 200,
+        "total_claims": 56232
+      },
+      "E00-E90": {
+        "n_providers": 154,
+        "total_claims": 41133
+      },
+      "C00-D49": {
+        "n_providers": 55,
+        "total_claims": 12594
+      },
+      "J00-J99": {
+        "n_providers": 60,
+        "total_claims": 9413
+      },
+      "F10-F19": {
+        "n_providers": 5,
+        "total_claims": 513
+      }
+    }
+  },
+  "state_density": [
+    {
+      "state": "NY",
+      "total_claims": 315945,
+      "total_beneficiaries": 297381,
+      "n_providers": 10531,
+      "claims_per_provider": 30.0
+    },
+    {
+      "state": "PA",
+      "total_claims": 228449,
+      "total_beneficiaries": 217173,
+      "n_providers": 6507,
+      "claims_per_provider": 35.1
+    },
+    {
+      "state": "NC",
+      "total_claims": 220783,
+      "total_beneficiaries": 189582,
+      "n_providers": 7952,
+      "claims_per_provider": 27.8
+    },
+    {
+      "state": "OR",
+      "total_claims": 208408,
+      "total_beneficiaries": 194338,
+      "n_providers": 8195,
+      "claims_per_provider": 25.4
+    },
+    {
+      "state": "OH",
+      "total_claims": 187577,
+      "total_beneficiaries": 174641,
+      "n_providers": 7374,
+      "claims_per_provider": 25.4
+    },
+    {
+      "state": "VA",
+      "total_claims": 183751,
+      "total_beneficiaries": 167562,
+      "n_providers": 6351,
+      "claims_per_provider": 28.9
+    },
+    {
+      "state": "NJ",
+      "total_claims": 170653,
+      "total_beneficiaries": 141512,
+      "n_providers": 4509,
+      "claims_per_provider": 37.8
+    },
+    {
+      "state": "MI",
+      "total_claims": 150089,
+      "total_beneficiaries": 140204,
+      "n_providers": 2134,
+      "claims_per_provider": 70.3
+    },
+    {
+      "state": "TN",
+      "total_claims": 147708,
+      "total_beneficiaries": 111022,
+      "n_providers": 3584,
+      "claims_per_provider": 41.2
+    },
+    {
+      "state": "IN",
+      "total_claims": 139218,
+      "total_beneficiaries": 112012,
+      "n_providers": 4679,
+      "claims_per_provider": 29.8
+    },
+    {
+      "state": "MD",
+      "total_claims": 129256,
+      "total_beneficiaries": 109869,
+      "n_providers": 2874,
+      "claims_per_provider": 45.0
+    },
+    {
+      "state": "FL",
+      "total_claims": 126635,
+      "total_beneficiaries": 97585,
+      "n_providers": 3563,
+      "claims_per_provider": 35.5
+    },
+    {
+      "state": "MN",
+      "total_claims": 124780,
+      "total_beneficiaries": 117651,
+      "n_providers": 5408,
+      "claims_per_provider": 23.1
+    },
+    {
+      "state": "LA",
+      "total_claims": 122454,
+      "total_beneficiaries": 104010,
+      "n_providers": 3700,
+      "claims_per_provider": 33.1
+    },
+    {
+      "state": "CA",
+      "total_claims": 101471,
+      "total_beneficiaries": 96357,
+      "n_providers": 3030,
+      "claims_per_provider": 33.5
+    },
+    {
+      "state": "WA",
+      "total_claims": 93286,
+      "total_beneficiaries": 87531,
+      "n_providers": 4069,
+      "claims_per_provider": 22.9
+    },
+    {
+      "state": "KY",
+      "total_claims": 88105,
+      "total_beneficiaries": 77203,
+      "n_providers": 2551,
+      "claims_per_provider": 34.5
+    },
+    {
+      "state": "UT",
+      "total_claims": 79097,
+      "total_beneficiaries": 72988,
+      "n_providers": 942,
+      "claims_per_provider": 84.0
+    },
+    {
+      "state": "TX",
+      "total_claims": 77161,
+      "total_beneficiaries": 66764,
+      "n_providers": 2442,
+      "claims_per_provider": 31.6
+    },
+    {
+      "state": "MA",
+      "total_claims": 74967,
+      "total_beneficiaries": 70960,
+      "n_providers": 3226,
+      "claims_per_provider": 23.2
+    },
+    {
+      "state": "CT",
+      "total_claims": 72128,
+      "total_beneficiaries": 63482,
+      "n_providers": 2965,
+      "claims_per_provider": 24.3
+    },
+    {
+      "state": "WI",
+      "total_claims": 68184,
+      "total_beneficiaries": 61666,
+      "n_providers": 3149,
+      "claims_per_provider": 21.7
+    },
+    {
+      "state": "IA",
+      "total_claims": 54623,
+      "total_beneficiaries": 50632,
+      "n_providers": 2274,
+      "claims_per_provider": 24.0
+    },
+    {
+      "state": "IL",
+      "total_claims": 45245,
+      "total_beneficiaries": 40955,
+      "n_providers": 1259,
+      "claims_per_provider": 35.9
+    },
+    {
+      "state": "MS",
+      "total_claims": 44127,
+      "total_beneficiaries": 39106,
+      "n_providers": 1026,
+      "claims_per_provider": 43.0
+    },
+    {
+      "state": "ME",
+      "total_claims": 41377,
+      "total_beneficiaries": 38593,
+      "n_providers": 1550,
+      "claims_per_provider": 26.7
+    },
+    {
+      "state": "CO",
+      "total_claims": 38907,
+      "total_beneficiaries": 34988,
+      "n_providers": 1531,
+      "claims_per_provider": 25.4
+    },
+    {
+      "state": "NM",
+      "total_claims": 34081,
+      "total_beneficiaries": 31932,
+      "n_providers": 1121,
+      "claims_per_provider": 30.4
+    },
+    {
+      "state": "WV",
+      "total_claims": 32056,
+      "total_beneficiaries": 28361,
+      "n_providers": 568,
+      "claims_per_provider": 56.4
+    },
+    {
+      "state": "MT",
+      "total_claims": 26627,
+      "total_beneficiaries": 24257,
+      "n_providers": 1073,
+      "claims_per_provider": 24.8
+    },
+    {
+      "state": "MO",
+      "total_claims": 26306,
+      "total_beneficiaries": 23454,
+      "n_providers": 1289,
+      "claims_per_provider": 20.4
+    },
+    {
+      "state": "SC",
+      "total_claims": 21942,
+      "total_beneficiaries": 19637,
+      "n_providers": 1035,
+      "claims_per_provider": 21.2
+    },
+    {
+      "state": "ID",
+      "total_claims": 19950,
+      "total_beneficiaries": 18518,
+      "n_providers": 810,
+      "claims_per_provider": 24.6
+    },
+    {
+      "state": "GA",
+      "total_claims": 19678,
+      "total_beneficiaries": 17807,
+      "n_providers": 781,
+      "claims_per_provider": 25.2
+    },
+    {
+      "state": "SD",
+      "total_claims": 18496,
+      "total_beneficiaries": 16513,
+      "n_providers": 279,
+      "claims_per_provider": 66.3
+    },
+    {
+      "state": "DE",
+      "total_claims": 17592,
+      "total_beneficiaries": 14849,
+      "n_providers": 324,
+      "claims_per_provider": 54.3
+    },
+    {
+      "state": "DC",
+      "total_claims": 17477,
+      "total_beneficiaries": 16506,
+      "n_providers": 761,
+      "claims_per_provider": 23.0
+    },
+    {
+      "state": "AR",
+      "total_claims": 17034,
+      "total_beneficiaries": 13493,
+      "n_providers": 629,
+      "claims_per_provider": 27.1
+    },
+    {
+      "state": "NE",
+      "total_claims": 16931,
+      "total_beneficiaries": 15284,
+      "n_providers": 776,
+      "claims_per_provider": 21.8
+    },
+    {
+      "state": "AL",
+      "total_claims": 14278,
+      "total_beneficiaries": 12082,
+      "n_providers": 403,
+      "claims_per_provider": 35.4
+    },
+    {
+      "state": "NH",
+      "total_claims": 13724,
+      "total_beneficiaries": 11735,
+      "n_providers": 617,
+      "claims_per_provider": 22.2
+    },
+    {
+      "state": "HI",
+      "total_claims": 13670,
+      "total_beneficiaries": 12033,
+      "n_providers": 434,
+      "claims_per_provider": 31.5
+    },
+    {
+      "state": "OK",
+      "total_claims": 13378,
+      "total_beneficiaries": 12616,
+      "n_providers": 574,
+      "claims_per_provider": 23.3
+    },
+    {
+      "state": "VT",
+      "total_claims": 9435,
+      "total_beneficiaries": 8764,
+      "n_providers": 401,
+      "claims_per_provider": 23.5
+    },
+    {
+      "state": "NV",
+      "total_claims": 9200,
+      "total_beneficiaries": 8199,
+      "n_providers": 433,
+      "claims_per_provider": 21.2
+    },
+    {
+      "state": "KS",
+      "total_claims": 7896,
+      "total_beneficiaries": 7169,
+      "n_providers": 382,
+      "claims_per_provider": 20.7
+    },
+    {
+      "state": "RI",
+      "total_claims": 7338,
+      "total_beneficiaries": 6822,
+      "n_providers": 327,
+      "claims_per_provider": 22.4
+    },
+    {
+      "state": "AK",
+      "total_claims": 7249,
+      "total_beneficiaries": 5710,
+      "n_providers": 248,
+      "claims_per_provider": 29.2
+    },
+    {
+      "state": "AZ",
+      "total_claims": 5123,
+      "total_beneficiaries": 4740,
+      "n_providers": 239,
+      "claims_per_provider": 21.4
+    },
+    {
+      "state": "ND",
+      "total_claims": 1336,
+      "total_beneficiaries": 1235,
+      "n_providers": 80,
+      "claims_per_provider": 16.7
+    },
+    {
+      "state": "WY",
+      "total_claims": 743,
+      "total_beneficiaries": 598,
+      "n_providers": 22,
+      "claims_per_provider": 33.8
+    },
+    {
+      "state": "GU",
+      "total_claims": 566,
+      "total_beneficiaries": 526,
+      "n_providers": 24,
+      "claims_per_provider": 23.6
+    },
+    {
+      "state": "VI",
+      "total_claims": 135,
+      "total_beneficiaries": 101,
+      "n_providers": 5,
+      "claims_per_provider": 27.0
+    },
+    {
+      "state": "PR",
+      "total_claims": 50,
+      "total_beneficiaries": 29,
+      "n_providers": 1,
+      "claims_per_provider": 50.0
+    }
+  ],
+  "sensitivity_correlation": {
+    "n_matched_states": 17,
+    "matched_states": [
+      "NY",
+      "NC",
+      "OH",
+      "MI",
+      "TN",
+      "IN",
+      "FL",
+      "LA",
+      "CA",
+      "KY",
+      "TX",
+      "WI",
+      "MT",
+      "GA",
+      "AR",
+      "OK",
+      "AZ"
+    ],
+    "correlation_g2211_providers_vs_sq_sensitivity": {
+      "r": 0.464,
+      "p": 0.0607
+    },
+    "correlation_g2211_providers_vs_imp_sensitivity": {
+      "r": 0.334,
+      "p": 0.1899
+    },
+    "correlation_g2211_providers_vs_sensitivity_gain": {
+      "r": -0.481,
+      "p": 0.0508
+    },
+    "correlation_g2211_providers_vs_bw_gap": {
+      "r": -0.076,
+      "p": 0.7705
+    },
+    "state_data": [
+      {
+        "state": "NY",
+        "total_claims": 315945,
+        "n_providers": 10531,
+        "claims_per_provider": 30.0,
+        "sq_overall_sensitivity": 45.65,
+        "imp_overall_sensitivity": 49.67,
+        "sensitivity_gain_pp": 4.02,
+        "sq_bw_gap_pp": 12.45
+      },
+      {
+        "state": "NC",
+        "total_claims": 220783,
+        "n_providers": 7952,
+        "claims_per_provider": 27.8,
+        "sq_overall_sensitivity": 39.34,
+        "imp_overall_sensitivity": 44.24,
+        "sensitivity_gain_pp": 4.89,
+        "sq_bw_gap_pp": 11.82
+      },
+      {
+        "state": "OH",
+        "total_claims": 187577,
+        "n_providers": 7374,
+        "claims_per_provider": 25.4,
+        "sq_overall_sensitivity": 37.24,
+        "imp_overall_sensitivity": 42.13,
+        "sensitivity_gain_pp": 4.9,
+        "sq_bw_gap_pp": 11.63
+      },
+      {
+        "state": "MI",
+        "total_claims": 150089,
+        "n_providers": 2134,
+        "claims_per_provider": 70.3,
+        "sq_overall_sensitivity": 33.18,
+        "imp_overall_sensitivity": 46.85,
+        "sensitivity_gain_pp": 13.67,
+        "sq_bw_gap_pp": 12.29
+      },
+      {
+        "state": "TN",
+        "total_claims": 147708,
+        "n_providers": 3584,
+        "claims_per_provider": 41.2,
+        "sq_overall_sensitivity": 19.24,
+        "imp_overall_sensitivity": 38.95,
+        "sensitivity_gain_pp": 19.71,
+        "sq_bw_gap_pp": 13.1
+      },
+      {
+        "state": "IN",
+        "total_claims": 139218,
+        "n_providers": 4679,
+        "claims_per_provider": 29.8,
+        "sq_overall_sensitivity": 34.86,
+        "imp_overall_sensitivity": 48.61,
+        "sensitivity_gain_pp": 13.76,
+        "sq_bw_gap_pp": 12.57
+      },
+      {
+        "state": "FL",
+        "total_claims": 126635,
+        "n_providers": 3563,
+        "claims_per_provider": 35.5,
+        "sq_overall_sensitivity": 15.12,
+        "imp_overall_sensitivity": 38.95,
+        "sensitivity_gain_pp": 23.83,
+        "sq_bw_gap_pp": 10.34
+      },
+      {
+        "state": "LA",
+        "total_claims": 122454,
+        "n_providers": 3700,
+        "claims_per_provider": 33.1,
+        "sq_overall_sensitivity": 29.41,
+        "imp_overall_sensitivity": 42.13,
+        "sensitivity_gain_pp": 12.72,
+        "sq_bw_gap_pp": 11.64
+      },
+      {
+        "state": "CA",
+        "total_claims": 101471,
+        "n_providers": 3030,
+        "claims_per_provider": 33.5,
+        "sq_overall_sensitivity": 44.07,
+        "imp_overall_sensitivity": 48.61,
+        "sensitivity_gain_pp": 4.54,
+        "sq_bw_gap_pp": 12.28
+      },
+      {
+        "state": "KY",
+        "total_claims": 88105,
+        "n_providers": 2551,
+        "claims_per_provider": 34.5,
+        "sq_overall_sensitivity": 31.88,
+        "imp_overall_sensitivity": 42.13,
+        "sensitivity_gain_pp": 10.25,
+        "sq_bw_gap_pp": 13.57
+      },
+      {
+        "state": "TX",
+        "total_claims": 77161,
+        "n_providers": 2442,
+        "claims_per_provider": 31.6,
+        "sq_overall_sensitivity": 24.32,
+        "imp_overall_sensitivity": 38.95,
+        "sensitivity_gain_pp": 14.63,
+        "sq_bw_gap_pp": 14.52
+      },
+      {
+        "state": "WI",
+        "total_claims": 68184,
+        "n_providers": 3149,
+        "claims_per_provider": 21.7,
+        "sq_overall_sensitivity": 44.07,
+        "imp_overall_sensitivity": 48.61,
+        "sensitivity_gain_pp": 4.54,
+        "sq_bw_gap_pp": 12.28
+      },
+      {
+        "state": "MT",
+        "total_claims": 26627,
+        "n_providers": 1073,
+        "claims_per_provider": 24.8,
+        "sq_overall_sensitivity": 40.37,
+        "imp_overall_sensitivity": 45.27,
+        "sensitivity_gain_pp": 4.9,
+        "sq_bw_gap_pp": 11.94
+      },
+      {
+        "state": "GA",
+        "total_claims": 19678,
+        "n_providers": 781,
+        "claims_per_provider": 25.2,
+        "sq_overall_sensitivity": 31.88,
+        "imp_overall_sensitivity": 42.13,
+        "sensitivity_gain_pp": 10.25,
+        "sq_bw_gap_pp": 13.57
+      },
+      {
+        "state": "AR",
+        "total_claims": 17034,
+        "n_providers": 629,
+        "claims_per_provider": 27.1,
+        "sq_overall_sensitivity": 30.93,
+        "imp_overall_sensitivity": 45.27,
+        "sensitivity_gain_pp": 14.34,
+        "sq_bw_gap_pp": 12.02
+      },
+      {
+        "state": "OK",
+        "total_claims": 13378,
+        "n_providers": 574,
+        "claims_per_provider": 23.3,
+        "sq_overall_sensitivity": 25.24,
+        "imp_overall_sensitivity": 42.13,
+        "sensitivity_gain_pp": 16.89,
+        "sq_bw_gap_pp": 12.73
+      },
+      {
+        "state": "AZ",
+        "total_claims": 5123,
+        "n_providers": 239,
+        "claims_per_provider": 21.4,
+        "sq_overall_sensitivity": 15.12,
+        "imp_overall_sensitivity": 38.95,
+        "sensitivity_gain_pp": 23.83,
+        "sq_bw_gap_pp": 10.34
+      }
+    ]
+  }
+}

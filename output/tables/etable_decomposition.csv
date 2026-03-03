@@ -1,0 +1,9 @@
+state,true_disability_pct,sq_identified_pct,total_underidentification_pp,design_channel_pp,visibility_channel_pp,documentation_channel_pp,improved_identified_pct,residual_underid_pp
+GA,65.27,35.86,29.41,5.26,0,0.0,41.12,24.15
+AR,65.27,32.33,32.94,12.29,0,0.0,44.61,20.66
+KY,65.27,35.86,29.41,5.26,0,0.0,41.12,24.15
+MT,65.27,44.61,20.66,0.0,0,0.0,44.61,20.66
+AZ,65.27,16.01,49.26,21.62,0,0.0,37.63,27.64
+TX,65.27,28.27,37.0,9.37,0,0.0,37.63,27.64
+IN,65.27,36.51,28.76,12.19,0,0.0,48.7,16.57
+OH,65.27,41.12,24.15,0.0,0,0.0,41.12,24.15
