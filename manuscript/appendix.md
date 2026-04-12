@@ -15,12 +15,15 @@
   - [A.2 State Frailty Policy Database](#a2)
   - [A.3 HHS Medicaid Provider Spending Dataset](#a3)
   - [A.4 CDC BRFSS DHDS Disability Prevalence](#a4)
+  - [A.5 Status Quo Base Case Construction: Step-by-Step](#a5) *(added in revision)*
+  - [A.6 Empirical Validation Against State-Reported Exemption Rates](#a6) *(added in revision)*
 - [eAppendix B: Statistical Analysis Detail](#eappendix-b)
-  - [B.1 Three-Channel Microsimulation Parameters](#b1)
+  - [B.1 Three-Channel Microsimulation Parameters (eTable B1)](#b1)
   - [B.2 Proportional Gap Closure Derivation](#b2)
   - [B.3 Sensitivity Analysis](#b3)
   - [B.4 Coverage Impact Projection Assumptions](#b4)
   - [B.5 Under-Identification Decomposition](#b5)
+  - [B.6 Z-Code Sensitivity Analysis](#b6) *(added in revision)*
 - [eAppendix C: Supporting Causal and Fairness Analyses](#eappendix-c)
   - [C.1 Staggered Difference-in-Differences](#c1)
   - [C.2 Synthetic Control Case Studies](#c2)
@@ -248,6 +251,8 @@ To assess whether the simulated status quo identification rates are plausible, w
 ## eAppendix B: Statistical Analysis Detail {#eappendix-b}
 
 ### B.1 Three-Channel Microsimulation Parameters {#b1}
+
+**eTable B1: Three-Channel Microsimulation Parameter Values**
 
 **Detection probabilities (P_DETECT) — Channel B:**
 

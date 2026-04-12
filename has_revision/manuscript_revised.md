@@ -110,7 +110,7 @@ Within race, the rural-urban sensitivity gap narrowed for White enrollees (from 
 
 ### Projected Coverage Impact
 
-Adoption of the redesigned algorithm would identify an estimated 3,773,401 additional medically frail adults across 17 states, averting an estimated 252,817 coverage losses under full community engagement requirement enforcement (Exhibit 4). The largest absolute impact was projected in Florida (668,328 additional identified; 44,778 losses averted), Texas (586,500; 39,296), and California (555,678; 37,230). Even states with relatively inclusive existing algorithms—such as New York and Wisconsin—would gain, reflecting the expanded diagnostic recognition and data integration improvements.
+Adoption of the redesigned algorithm would identify an estimated 3,773,268 additional medically frail adults across 17 states, averting an estimated 252,799 coverage losses under full community engagement requirement enforcement (Exhibit 4). The largest absolute impact was projected in Florida (667,666 additional identified; 44,733 losses averted), Texas (586,500; 39,295), and California (555,676; 37,230). Even states with relatively inclusive existing algorithms—such as New York and Wisconsin—would gain, reflecting the expanded diagnostic recognition and data integration improvements.
 
 ---
 
